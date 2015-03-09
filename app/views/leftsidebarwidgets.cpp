@@ -95,20 +95,20 @@ public:
 
 AlbumFolderViewSideBarWidget::AlbumFolderViewSideBarWidget(QWidget* const parent, AlbumModel* const model,
                                                            AlbumModificationHelper* const albumModificationHelper)
-    : SidebarWidget(parent), d(new Private)
+    : SidebarWidget(parent),
+      d(new Private)
 {
     setObjectName(QLatin1String("AlbumFolderView Sidebar"));
     setProperty("Shortcut", Qt::META + Qt::CTRL + Qt::Key_F1);
     d->albumModificationHelper = albumModificationHelper;
 
-    QVBoxLayout* const layout = new QVBoxLayout(this);
-
-    d->albumFolderView = new AlbumSelectionTreeView(this, model, d->albumModificationHelper);
+    QVBoxLayout* const layout  = new QVBoxLayout(this);
+    d->albumFolderView         = new AlbumSelectionTreeView(this, model, d->albumModificationHelper);
     d->albumFolderView->setObjectName(QLatin1String("AlbumFolderView"));
     d->albumFolderView->setConfigGroup(getConfigGroup());
     d->albumFolderView->setExpandNewCurrentItem(true);
     d->albumFolderView->setAlbumManagerCurrentAlbum(true);
-    d->searchTextBar   = new SearchTextBar(this, "DigikamViewFolderSearchBar");
+    d->searchTextBar   = new SearchTextBar(this, QLatin1String("DigikamViewFolderSearchBar"));
     d->searchTextBar->setHighlightOnResult(true);
     d->searchTextBar->setModel(model, AbstractAlbumModel::AlbumIdRole, AbstractAlbumModel::AlbumTitleRole);
     d->searchTextBar->setFilterModel(d->albumFolderView->albumFilterModel());
@@ -241,7 +241,7 @@ TagViewSideBarWidget::TagViewSideBarWidget(QWidget* const parent, TagModel* cons
     d->tagFolderView->setExpandNewCurrentItem(true);
     d->tagFolderView->setAlbumManagerCurrentAlbum(true);
 
-    d->tagSearchBar  = new SearchTextBar(this, "DigikamViewTagSearchBar");
+    d->tagSearchBar  = new SearchTextBar(this, QLatin1String("DigikamViewTagSearchBar"));
     d->tagSearchBar->setHighlightOnResult(true);
     d->tagSearchBar->setModel(model, AbstractAlbumModel::AlbumIdRole, AbstractAlbumModel::AlbumTitleRole);
     d->tagSearchBar->setFilterModel(d->tagFolderView->albumFilterModel());
@@ -762,7 +762,7 @@ TimelineSideBarWidget::TimelineSideBarWidget(QWidget* const parent, SearchModel*
     d->timeLineFolderView->filteredModel()->listTimelineSearches();
     d->timeLineFolderView->filteredModel()->setListTemporarySearches(false);
     d->timeLineFolderView->setAlbumManagerCurrentAlbum(false);
-    d->searchDateBar      = new SearchTextBar(this, "TimeLineViewSearchDateBar");
+    d->searchDateBar      = new SearchTextBar(this, QLatin1String("TimeLineViewSearchDateBar"));
     d->searchDateBar->setModel(d->timeLineFolderView->filteredModel(),
                                AbstractAlbumModel::AlbumIdRole,
                                AbstractAlbumModel::AlbumTitleRole);
@@ -1100,7 +1100,7 @@ SearchSideBarWidget::SearchSideBarWidget(QWidget* const parent, SearchModel* con
     d->searchTreeView->filteredModel()->listNormalSearches();
     d->searchTreeView->filteredModel()->setListTemporarySearches(true);
     d->searchTreeView->setAlbumManagerCurrentAlbum(true);
-    d->searchSearchBar  = new SearchTextBar(this, "DigikamViewSearchSearchBar");
+    d->searchSearchBar  = new SearchTextBar(this, QLatin1String("DigikamViewSearchSearchBar"));
     d->searchSearchBar->setModel(d->searchTreeView->filteredModel(),
                                  AbstractAlbumModel::AlbumIdRole, AbstractAlbumModel::AlbumTitleRole);
     d->searchSearchBar->setFilterModel(d->searchTreeView->albumFilterModel());
@@ -1387,7 +1387,7 @@ PeopleSideBarWidget::PeopleSideBarWidget(QWidget* const parent, TagModel* const 
     d->tagFolderView->filteredModel()->listOnlyTagsWithProperty(QLatin1String("person"));
     d->tagFolderView->filteredModel()->setFilterBehavior(AlbumFilterModel::StrictFiltering);
 
-    d->tagSearchBar   = new SearchTextBar(this, "DigikamViewPeopleSearchBar");
+    d->tagSearchBar   = new SearchTextBar(this, QLatin1String("DigikamViewPeopleSearchBar"));
     d->tagSearchBar->setHighlightOnResult(true);
     d->tagSearchBar->setModel(d->tagFolderView->filteredModel(),
                               AbstractAlbumModel::AlbumIdRole, AbstractAlbumModel::AlbumTitleRole);

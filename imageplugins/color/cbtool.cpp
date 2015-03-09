@@ -68,9 +68,9 @@ public:
     EditorToolSettings*  gboxSettings;
 };
 
-const QString CBTool::Private::configGroupName("colorbalance Tool");
-const QString CBTool::Private::configHistogramChannelEntry("Histogram Channel");
-const QString CBTool::Private::configHistogramScaleEntry("Histogram Scale");
+const QString CBTool::Private::configGroupName(QLatin1String("colorbalance Tool"));
+const QString CBTool::Private::configHistogramChannelEntry(QLatin1String("Histogram Channel"));
+const QString CBTool::Private::configHistogramScaleEntry(QLatin1String("Histogram Scale"));
 
 // --------------------------------------------------------
 
@@ -78,9 +78,9 @@ CBTool::CBTool(QObject* const parent)
     : EditorToolThreaded(parent),
       d(new Private)
 {
-    setObjectName("colorbalance");
+    setObjectName(QLatin1String("colorbalance"));
     setToolName(i18n("Color Balance"));
-    setToolIcon(QIcon::fromTheme("adjustrgb"));
+    setToolIcon(QIcon::fromTheme(QLatin1String("adjustrgb")));
     setInitPreview(true);
 
     d->previewWidget = new ImageRegionWidget;

@@ -54,23 +54,20 @@ void FileSaveOptionsBoxTest::testDiscoverFormat_data()
     QTest::newRow("pgf") << "PGF" << (int) DImg::PGF;
 
     QTest::newRow("unknwon") << "i.dont.know" << (int) DImg::NONE; // krazy:exclude=spelling
-
 }
 
 void FileSaveOptionsBoxTest::testDiscoverFormat()
 {
-
     QFETCH(QString, filename);
     QFETCH(int, format);
 
     FileSaveOptionsBox box;
     QCOMPARE((int) box.discoverFormat(filename), format);
-
 }
 
 void FileSaveOptionsBoxTest::testDiscoverFormatDefault()
 {
     FileSaveOptionsBox box;
-    QCOMPARE(box.discoverFormat("unknown"), DImg::NONE);
-    QCOMPARE(box.discoverFormat("unknown", DImg::PGF), DImg::PGF);
+    QCOMPARE(box.discoverFormat(QLatin1String("unknown")), DImg::NONE);
+    QCOMPARE(box.discoverFormat(QLatin1String("unknown"), DImg::PGF), DImg::PGF);
 }

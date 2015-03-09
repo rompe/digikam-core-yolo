@@ -91,10 +91,10 @@ public:
     EditorToolSettings*  gboxSettings;
 };
 
-const QString BlurFXTool::Private::configGroupName("blurfx Tool");
-const QString BlurFXTool::Private::configEffectTypeEntry("EffectType");
-const QString BlurFXTool::Private::configDistanceAdjustmentEntry("DistanceAdjustment");
-const QString BlurFXTool::Private::configLevelAdjustmentEntry("LevelAdjustment");
+const QString BlurFXTool::Private::configGroupName(QLatin1String("blurfx Tool"));
+const QString BlurFXTool::Private::configEffectTypeEntry(QLatin1String("EffectType"));
+const QString BlurFXTool::Private::configDistanceAdjustmentEntry(QLatin1String("DistanceAdjustment"));
+const QString BlurFXTool::Private::configLevelAdjustmentEntry(QLatin1String("LevelAdjustment"));
 
 // --------------------------------------------------------
 
@@ -102,9 +102,9 @@ BlurFXTool::BlurFXTool(QObject* const parent)
     : EditorToolThreaded(parent),
       d(new Private)
 {
-    setObjectName("blurfx");
+    setObjectName(QLatin1String("blurfx"));
     setToolName(i18n("Blur Effects"));
-    setToolIcon(QIcon::fromTheme("blurfx"));
+    setToolIcon(QIcon::fromTheme(QLatin1String("blurfx")));
 
     // -------------------------------------------------------------
 

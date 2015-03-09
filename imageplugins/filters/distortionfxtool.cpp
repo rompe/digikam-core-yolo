@@ -93,10 +93,10 @@ public:
     EditorToolSettings*  gboxSettings;
 };
 
-const QString DistortionFXTool::Private::configGroupName("distortionfx Tool");
-const QString DistortionFXTool::Private::configEffectTypeEntry("EffectType");
-const QString DistortionFXTool::Private::configIterationAdjustmentEntry("IterationAdjustment");
-const QString DistortionFXTool::Private::configLevelAdjustmentEntry("LevelAdjustment");
+const QString DistortionFXTool::Private::configGroupName(QLatin1String("distortionfx Tool"));
+const QString DistortionFXTool::Private::configEffectTypeEntry(QLatin1String("EffectType"));
+const QString DistortionFXTool::Private::configIterationAdjustmentEntry(QLatin1String("IterationAdjustment"));
+const QString DistortionFXTool::Private::configLevelAdjustmentEntry(QLatin1String("LevelAdjustment"));
 
 // --------------------------------------------------------
 
@@ -104,9 +104,9 @@ DistortionFXTool::DistortionFXTool(QObject* const parent)
     : EditorToolThreaded(parent),
       d(new Private)
 {
-    setObjectName("distortionfx");
+    setObjectName(QLatin1String("distortionfx"));
     setToolName(i18n("Distortion Effects"));
-    setToolIcon(QIcon::fromTheme("distortionfx"));
+    setToolIcon(QIcon::fromTheme(QLatin1String("distortionfx")));
 
     d->previewWidget = new ImageRegionWidget;
     d->previewWidget->setWhatsThis(i18n("This is the preview of the distortion effect "

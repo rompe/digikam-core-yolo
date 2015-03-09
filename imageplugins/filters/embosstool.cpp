@@ -71,8 +71,8 @@ public:
     EditorToolSettings*  gboxSettings;
 };
 
-const QString EmbossTool::Private::configGroupName("emboss Tool");
-const QString EmbossTool::Private::configDepthAdjustmentEntry("DepthAdjustment");
+const QString EmbossTool::Private::configGroupName(QLatin1String("emboss Tool"));
+const QString EmbossTool::Private::configDepthAdjustmentEntry(QLatin1String("DepthAdjustment"));
 
 // --------------------------------------------------------
 
@@ -80,9 +80,9 @@ EmbossTool::EmbossTool(QObject* const parent)
     : EditorToolThreaded(parent),
       d(new Private)
 {
-    setObjectName("emboss");
+    setObjectName(QLatin1String("emboss"));
     setToolName(i18n("Emboss"));
-    setToolIcon(QIcon::fromTheme("embosstool"));
+    setToolIcon(QIcon::fromTheme(QLatin1String("embosstool")));
     setInitPreview(true);
 
     // -------------------------------------------------------------

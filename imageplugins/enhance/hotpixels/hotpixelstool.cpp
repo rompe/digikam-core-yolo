@@ -93,9 +93,9 @@ public:
     EditorToolSettings*  gboxSettings;
 };
 
-const QString HotPixelsTool::Private::configGroupName("hotpixels Tool");
-const QString HotPixelsTool::Private::configLastBlackFrameFileEntry("Last Black Frame File");
-const QString HotPixelsTool::Private::configFilterMethodEntry("Filter Method");
+const QString HotPixelsTool::Private::configGroupName(QLatin1String("hotpixels Tool"));
+const QString HotPixelsTool::Private::configLastBlackFrameFileEntry(QLatin1String("Last Black Frame File"));
+const QString HotPixelsTool::Private::configFilterMethodEntry(QLatin1String("Filter Method"));
 
 // --------------------------------------------------------
 
@@ -108,9 +108,9 @@ HotPixelsTool::HotPixelsTool(QObject* const parent)
     : EditorToolThreaded(parent),
       d(new Private)
 {
-    setObjectName("hotpixels");
+    setObjectName(QLatin1String("hotpixels"));
     setToolName(i18n("Hot Pixels"));
-    setToolIcon(QIcon::fromTheme("hotpixels"));
+    setToolIcon(QIcon::fromTheme(QLatin1String("hotpixels")));
 
     // -------------------------------------------------------------
 
@@ -131,7 +131,7 @@ HotPixelsTool::HotPixelsTool(QObject* const parent)
     d->filterMethodCombo->setDefaultIndex(HotPixelFixer::QUADRATIC_INTERPOLATION);
 
     d->blackFrameButton = new QPushButton(i18n("Black Frame..."), d->gboxSettings->plainPage());
-    d->blackFrameButton->setIcon(QIcon::fromTheme("document-open"));
+    d->blackFrameButton->setIcon(QIcon::fromTheme(QLatin1String("document-open")));
     d->blackFrameButton->setWhatsThis(i18n("Use this button to add a new black frame file which will "
                                            "be used by the hot pixels removal filter.") );
 

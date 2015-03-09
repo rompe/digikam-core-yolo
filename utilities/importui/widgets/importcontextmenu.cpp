@@ -80,7 +80,7 @@ public:
 
 public:
 
-    QAction* copyFromMainCollection(const char* name)
+    QAction* copyFromMainCollection(const QString& name) const
     {
         QAction* const mainAction = stdActionCollection->action(name);
 
@@ -96,7 +96,8 @@ public:
 };
 
 ImportContextMenuHelper::ImportContextMenuHelper(QMenu* const parent, KActionCollection* const actionCollection)
-    : QObject(parent), d(new Private(this))
+    : QObject(parent),
+      d(new Private(this))
 {
     d->parent = parent;
 
@@ -115,7 +116,7 @@ ImportContextMenuHelper::~ImportContextMenuHelper()
     delete d;
 }
 
-void ImportContextMenuHelper::addAction(const char* name, bool addDisabled)
+void ImportContextMenuHelper::addAction(const QString& name, bool addDisabled)
 {
     QAction* const action = d->stdActionCollection->action(name);
     addAction(action, addDisabled);
@@ -182,7 +183,7 @@ void ImportContextMenuHelper::addServicesMenu(const QList<QUrl>& selectedItems)
     {
         // Query trader
         const QString firstMimeType      = mimeTypes.takeFirst();
-        const QString constraintTemplate = "'%1' in ServiceTypes";
+        const QString constraintTemplate = QString::fromUtf8("'%1' in ServiceTypes");
         QStringList   constraints;
 
         foreach(const QString& mimeType, mimeTypes)
@@ -190,7 +191,7 @@ void ImportContextMenuHelper::addServicesMenu(const QList<QUrl>& selectedItems)
             constraints << constraintTemplate.arg(mimeType);
         }
 
-        offers = KMimeTypeTrader::self()->query(firstMimeType, "Application", constraints.join(" and "));
+        offers = KMimeTypeTrader::self()->query(firstMimeType, QLatin1String("Application"), constraints.join(QLatin1String(" and ")));
 
         // remove duplicate service entries
         QSet<QString> seenApps;
@@ -221,7 +222,7 @@ void ImportContextMenuHelper::addServicesMenu(const QList<QUrl>& selectedItems)
 
         foreach(KService::Ptr service, offers)
         {
-            QString name          = service->name().replace('&', "&&");
+            QString name          = service->name().replace(QLatin1Char('&'), QLatin1String("&&"));
             QAction* const action = servicesMenu->addAction(name);
             action->setIcon(QIcon::fromTheme(service->icon()));
             action->setData(service->name());
@@ -298,18 +299,18 @@ void ImportContextMenuHelper::addRotateMenu(itemIds& /*ids*/)
 //    setSelectedIds(ids);
 
 //    QMenu* const imageRotateMenu = new QMenu(i18n("Rotate"), d->parent);
-//    imageRotateMenu->setIcon(QIcon::fromTheme("object-rotate-right"));
+//    imageRotateMenu->setIcon(QIcon::fromTheme(QLatin1String("object-rotate-right")));
 
 //    QAction* const left = new QAction(this);
-//    left->setObjectName("rotate_ccw");
+//    left->setObjectName(QLatin1String("rotate_ccw"));
 //    left->setText(i18nc("rotate image left", "Left"));
 //    connect(left, SIGNAL(triggered(bool)),
 //            this, SLOT(slotRotate()));
 //    imageRotateMenu->addAction(left);
 
 //    QAction* const right = new QAction(this);
-//    right->setObjectName("rotate_cw");
-//    right->setText(i18nc("rotate image right", "Right"));
+//    right->setObjectName(QLatin1String("rotate_cw");
+//    right->setText(i18nc("rotate image right", "Right")));
 //    connect(right, SIGNAL(triggered(bool)),
 //            this, SLOT(slotRotate()));
 //    imageRotateMenu->addAction(right);
@@ -336,7 +337,7 @@ void ImportContextMenuHelper::addAssignTagsMenu(itemIds& ids)
 
     QMenu* const assignTagsPopup = new TagsPopupMenu(ids, TagsPopupMenu::RECENTLYASSIGNED, d->parent);
     assignTagsPopup->menuAction()->setText(i18n("Assign Tag"));
-    assignTagsPopup->menuAction()->setIcon(QIcon::fromTheme("tag"));
+    assignTagsPopup->menuAction()->setIcon(QIcon::fromTheme(QLatin1String("tag")));
     d->parent->addMenu(assignTagsPopup);
 
     connect(assignTagsPopup, SIGNAL(signalTagActivated(int)),
@@ -352,7 +353,7 @@ void ImportContextMenuHelper::addRemoveTagsMenu(itemIds& ids)
 
     QMenu* const removeTagsPopup = new TagsPopupMenu(ids, TagsPopupMenu::REMOVE, d->parent);
     removeTagsPopup->menuAction()->setText(i18n("Remove Tag"));
-    removeTagsPopup->menuAction()->setIcon(QIcon::fromTheme("tag"));
+    removeTagsPopup->menuAction()->setIcon(QIcon::fromTheme(QLatin1String("tag")));
     d->parent->addMenu(removeTagsPopup);
 
     connect(removeTagsPopup, SIGNAL(signalTagActivated(int)),

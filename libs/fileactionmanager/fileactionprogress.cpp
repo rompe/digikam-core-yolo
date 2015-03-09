@@ -38,12 +38,12 @@
 namespace Digikam
 {
 
-FileActionProgress::FileActionProgress(const char* name)
+FileActionProgress::FileActionProgress(const QString& name)
     : ProgressItem(0, name, QString(), QString(), true, true)
 {
     ProgressManager::addProgressItem(this);
     setLabel(i18n("Process Items"));
-    setThumbnail(QIcon::fromTheme("digikam"));
+    setThumbnail(QIcon::fromTheme(QLatin1String("digikam")));
 
     connect(this, SIGNAL(progressItemCanceled(ProgressItem*)),
             this, SLOT(slotCancel()));

@@ -76,9 +76,9 @@ public:
     EditorToolSettings*  gboxSettings;
 };
 
-const QString CharcoalTool::Private::configGroupName("charcoal Tool");
-const QString CharcoalTool::Private::configPencilAdjustmentEntry("PencilAdjustment");
-const QString CharcoalTool::Private::configSmoothAdjustmentEntry("SmoothAdjustment");
+const QString CharcoalTool::Private::configGroupName(QLatin1String("charcoal Tool"));
+const QString CharcoalTool::Private::configPencilAdjustmentEntry(QLatin1String("PencilAdjustment"));
+const QString CharcoalTool::Private::configSmoothAdjustmentEntry(QLatin1String("SmoothAdjustment"));
 
 // --------------------------------------------------------
 
@@ -86,9 +86,9 @@ CharcoalTool::CharcoalTool(QObject* const parent)
     : EditorToolThreaded(parent),
       d(new Private)
 {
-    setObjectName("charcoal");
+    setObjectName(QLatin1String("charcoal"));
     setToolName(i18n("Charcoal"));
-    setToolIcon(QIcon::fromTheme("charcoaltool"));
+    setToolIcon(QIcon::fromTheme(QLatin1String("charcoaltool")));
 
     // -------------------------------------------------------------
 

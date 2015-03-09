@@ -59,7 +59,7 @@ class FilmGrainTool::Private
 public:
 
     Private() :
-        configGroupName("filmgrain Tool"),
+        configGroupName(QLatin1String("filmgrain Tool")),
         settingsView(0),
         previewWidget(0),
         gboxSettings(0)
@@ -77,9 +77,9 @@ FilmGrainTool::FilmGrainTool(QObject* const parent)
     : EditorToolThreaded(parent),
       d(new Private)
 {
-    setObjectName("filmgrain");
+    setObjectName(QLatin1String("filmgrain"));
     setToolName(i18n("Film Grain"));
-    setToolIcon(QIcon::fromTheme("filmgrain"));
+    setToolIcon(QIcon::fromTheme(QLatin1String("filmgrain")));
     setInitPreview(true);
 
     d->previewWidget = new ImageRegionWidget;

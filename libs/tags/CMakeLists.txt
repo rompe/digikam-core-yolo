@@ -1,3 +1,9 @@
+#
+# Copyright (c) 2010-2015 by Gilles Caulier, <caulier dot gilles at gmail dot com>
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING-CMAKE-SCRIPTS file.
+
 set(libtags_SRCS
     addtagscombobox.cpp
     addtagscompletionbox.cpp
@@ -20,7 +26,9 @@ set(libtags_SRCS
     tagsmanager/models/tagmngrlistitem.cpp
 )
 
-include_directories(tagsmanager/ tagsmanager/models/)
+include_directories(tagsmanager/
+                    tagsmanager/models/
+)
 
 add_library(digikamtags STATIC ${libtags_SRCS})
 
@@ -29,5 +37,6 @@ target_include_directories(digikamtags PUBLIC
 )
 
 target_link_libraries(digikamtags
-                         digikamalbum
+
+                      digikamalbum
 )

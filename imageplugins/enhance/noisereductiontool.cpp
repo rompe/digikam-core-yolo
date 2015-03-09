@@ -52,7 +52,7 @@ class NoiseReductionTool::Private
 public:
 
     Private() :
-        configGroupName("noisereduction Tool"),
+        configGroupName(QLatin1String("noisereduction Tool")),
         nrSettings(0),
         previewWidget(0),
         gboxSettings(0)
@@ -69,9 +69,9 @@ NoiseReductionTool::NoiseReductionTool(QObject* const parent)
     : EditorToolThreaded(parent),
       d(new Private)
 {
-    setObjectName("noisereduction");
+    setObjectName(QLatin1String("noisereduction"));
     setToolName(i18n("Noise Reduction"));
-    setToolIcon(QIcon::fromTheme("noisereduction"));
+    setToolIcon(QIcon::fromTheme(QLatin1String("noisereduction")));
 
     // -------------------------------------------------------------
 

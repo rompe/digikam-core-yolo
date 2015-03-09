@@ -75,38 +75,38 @@ public:
 };
 
 ImagePlugin_Transform::ImagePlugin_Transform(QObject* const parent, const QVariantList&)
-    : ImagePlugin(parent, "ImagePlugin_Transform"),
+    : ImagePlugin(parent, QLatin1String("ImagePlugin_Transform")),
       d(new Private)
 {
     // to load the rc file from digikam's installation path
-    setComponentName("digikam", i18nc("to be displayed in shortcuts dialog", "Transformation plugins"));
+    setComponentName(QLatin1String("digikam"), i18nc("to be displayed in shortcuts dialog", "Transformation plugins"));
 
     KActionCollection *ac = actionCollection();
 
-    d->perspectiveAction = new QAction(QIcon::fromTheme("perspective"), i18n("Perspective Adjustment..."), this);
-    ac->addAction("imageplugin_perspective", d->perspectiveAction);
+    d->perspectiveAction = new QAction(QIcon::fromTheme(QLatin1String("perspective")), i18n("Perspective Adjustment..."), this);
+    ac->addAction(QLatin1String("imageplugin_perspective"), d->perspectiveAction);
     connect(d->perspectiveAction, SIGNAL(triggered(bool)),
             this, SLOT(slotPerspective()));
 
-    d->sheartoolAction = new QAction(QIcon::fromTheme("shear"), i18n("Shear..."), this);
-    ac->addAction("imageplugin_sheartool", d->sheartoolAction);
+    d->sheartoolAction = new QAction(QIcon::fromTheme(QLatin1String("shear")), i18n("Shear..."), this);
+    ac->addAction(QLatin1String("imageplugin_sheartool"), d->sheartoolAction);
     connect(d->sheartoolAction, SIGNAL(triggered(bool)),
             this, SLOT(slotShearTool()));
 
-    d->resizeAction = new QAction(QIcon::fromTheme("transform-scale"), i18n("&Resize..."), this);
-    ac->addAction("imageplugin_resize", d->resizeAction);
+    d->resizeAction = new QAction(QIcon::fromTheme(QLatin1String("transform-scale")), i18n("&Resize..."), this);
+    ac->addAction(QLatin1String("imageplugin_resize"), d->resizeAction);
     connect(d->resizeAction, SIGNAL(triggered()),
             this, SLOT(slotResize()));
 
-    d->aspectRatioCropAction = new QAction(QIcon::fromTheme("ratiocrop"), i18n("Aspect Ratio Crop..."), this);
-    ac->addAction("imageplugin_ratiocrop", d->aspectRatioCropAction);
+    d->aspectRatioCropAction = new QAction(QIcon::fromTheme(QLatin1String("ratiocrop")), i18n("Aspect Ratio Crop..."), this);
+    ac->addAction(QLatin1String("imageplugin_ratiocrop"), d->aspectRatioCropAction);
     connect(d->aspectRatioCropAction, SIGNAL(triggered(bool)),
             this, SLOT(slotRatioCrop()));
 
 #ifdef HAVE_LIBLQR_1
 
-    d->contentAwareResizingAction = new QAction(QIcon::fromTheme("transform-scale"), i18n("Liquid Rescale..."), this);
-    ac->addAction("imageplugin_contentawareresizing", d->contentAwareResizingAction);
+    d->contentAwareResizingAction = new QAction(QIcon::fromTheme(QLatin1String("transform-scale")), i18n("Liquid Rescale..."), this);
+    ac->addAction(QLatin1String("imageplugin_contentawareresizing"), d->contentAwareResizingAction);
     //ac->setDefaultShortcut(d->contentAwareResizingAction, Qt::CTRL + Qt::SHIFT + Qt::Key_C);
     connect(d->contentAwareResizingAction, SIGNAL(triggered(bool)),
             this, SLOT(slotContentAwareResizing()));
@@ -115,31 +115,31 @@ ImagePlugin_Transform::ImagePlugin_Transform(QObject* const parent, const QVaria
 
     //-----------------------------------------------------------------------------------
 
-    d->freerotationAction = new QAction(QIcon::fromTheme("freerotation"), i18n("Free Rotation..."), this);
-    ac->addAction("imageplugin_freerotation", d->freerotationAction );
+    d->freerotationAction = new QAction(QIcon::fromTheme(QLatin1String("freerotation")), i18n("Free Rotation..."), this);
+    ac->addAction(QLatin1String("imageplugin_freerotation"), d->freerotationAction );
     connect(d->freerotationAction, SIGNAL(triggered(bool)),
             this, SLOT(slotFreeRotation()));
 
     QAction* point1Action = new QAction(i18n("Set Point 1"), this);
-    ac->addAction("imageplugin_freerotation_point1", point1Action);
+    ac->addAction(QLatin1String("imageplugin_freerotation_point1"), point1Action);
     ac->setDefaultShortcut(point1Action, Qt::CTRL + Qt::SHIFT + Qt::Key_1);
     connect(point1Action, SIGNAL(triggered(bool)),
             this, SIGNAL(signalPoint1Action()));
 
     QAction* const point2Action = new QAction(i18n("Set Point 2"), this);
-    ac->addAction("imageplugin_freerotation_point2", point2Action);
+    ac->addAction(QLatin1String("imageplugin_freerotation_point2"), point2Action);
     ac->setDefaultShortcut(point2Action, Qt::CTRL + Qt::SHIFT + Qt::Key_2);
     connect(point2Action, SIGNAL(triggered(bool)),
             this, SIGNAL(signalPoint2Action()));
 
     QAction* const autoAdjustAction = new QAction(i18n("Auto Adjust"), this);
-    ac->addAction("imageplugin_freerotation_autoadjust", autoAdjustAction);
+    ac->addAction(QLatin1String("imageplugin_freerotation_autoadjust"), autoAdjustAction);
     ac->setDefaultShortcut(autoAdjustAction, Qt::CTRL + Qt::SHIFT + Qt::Key_R);
     connect(autoAdjustAction, SIGNAL(triggered(bool)),
             this, SIGNAL(signalAutoAdjustAction()));
 
     setActionCategory(i18n("Transform"));
-    setXMLFile("digikamimageplugin_transform_ui.rc");
+    setXMLFile(QLatin1String("digikamimageplugin_transform_ui.rc"));
 
     qCDebug(DIGIKAM_IMAGEPLUGINS_LOG) << "ImagePlugin_Transform plugin loaded";
 }

@@ -64,8 +64,8 @@ class LensAutoFixTool::Private
 public:
 
     Private() :
-        configGroupName("Lens Auto-Correction Tool"),
-        configShowGrid("Show Grid"),
+        configGroupName(QLatin1String("Lens Auto-Correction Tool")),
+        configShowGrid(QLatin1String("Show Grid")),
         maskPreviewLabel(0),
         showGrid(0),
         settingsView(0),
@@ -92,9 +92,9 @@ LensAutoFixTool::LensAutoFixTool(QObject* const parent)
     : EditorToolThreaded(parent),
       d(new Private)
 {
-    setObjectName("lensautocorrection");
+    setObjectName(QLatin1String("lensautocorrection"));
     setToolName(i18n("Lens Auto-Correction"));
-    setToolIcon(QIcon::fromTheme("lensautofix"));
+    setToolIcon(QIcon::fromTheme(QLatin1String("lensautofix")));
 
     d->previewWidget = new ImageGuideWidget(0, true, ImageGuideWidget::HVGuideMode);
     setToolView(d->previewWidget);

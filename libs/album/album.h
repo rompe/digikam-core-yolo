@@ -30,16 +30,16 @@
 
 // Qt includes
 
+#include <QMetaType>
 #include <QList>
 #include <QString>
 #include <QMap>
 #include <QUrl>
-
+#include <QObject>
 
 // Local includes
 
 #include "albuminfo.h"
-//#include "databaseurl.h"
 
 namespace Digikam
 {

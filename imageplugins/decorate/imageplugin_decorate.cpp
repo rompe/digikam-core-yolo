@@ -63,30 +63,30 @@ public:
 };
 
 ImagePlugin_Decorate::ImagePlugin_Decorate(QObject* const parent, const QVariantList&)
-    : ImagePlugin(parent, "ImagePlugin_Decorate"),
+    : ImagePlugin(parent, QLatin1String("ImagePlugin_Decorate")),
       d(new Private)
 {
     // to load the rc file from digikam's installation path
-    setComponentName("digikam", i18nc("to be displayed in shortcuts dialog", "Decoration plugins"));
+    setComponentName(QLatin1String("digikam"), i18nc("to be displayed in shortcuts dialog", "Decoration plugins"));
 
-    d->insertTextAction = new QAction(QIcon::fromTheme("insert-text"), i18n("Insert Text..."), this);
-    actionCollection()->addAction("imageplugin_inserttext", d->insertTextAction );
+    d->insertTextAction = new QAction(QIcon::fromTheme(QLatin1String("insert-text")), i18n("Insert Text..."), this);
+    actionCollection()->addAction(QLatin1String("imageplugin_inserttext"), d->insertTextAction );
     actionCollection()->setDefaultShortcut(d->insertTextAction, Qt::SHIFT+Qt::CTRL+Qt::Key_T);
     connect(d->insertTextAction, SIGNAL(triggered(bool)),
             this, SLOT(slotInsertText()));
 
-    d->borderAction = new QAction(QIcon::fromTheme("bordertool"), i18n("Add Border..."), this);
-    actionCollection()->addAction("imageplugin_border", d->borderAction );
+    d->borderAction = new QAction(QIcon::fromTheme(QLatin1String("bordertool")), i18n("Add Border..."), this);
+    actionCollection()->addAction(QLatin1String("imageplugin_border"), d->borderAction );
     connect(d->borderAction, SIGNAL(triggered(bool)),
             this, SLOT(slotBorder()));
 
-    d->textureAction = new QAction(QIcon::fromTheme("texture"), i18n("Apply Texture..."), this);
-    actionCollection()->addAction("imageplugin_texture", d->textureAction );
+    d->textureAction = new QAction(QIcon::fromTheme(QLatin1String("texture")), i18n("Apply Texture..."), this);
+    actionCollection()->addAction(QLatin1String("imageplugin_texture"), d->textureAction );
     connect(d->textureAction, SIGNAL(triggered(bool)),
             this, SLOT(slotTexture()));
 
     setActionCategory(i18n("Decorate"));
-    setXMLFile("digikamimageplugin_decorate_ui.rc");
+    setXMLFile(QLatin1String("digikamimageplugin_decorate_ui.rc"));
 
     qCDebug(DIGIKAM_IMAGEPLUGINS_LOG) << "ImagePlugin_Decorate plugin loaded";
 }

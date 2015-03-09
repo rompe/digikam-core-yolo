@@ -281,7 +281,7 @@ void ImportDelegate::paint(QPainter* p, const QStyleOptionViewItem& option, cons
  
  if (info.hasImageHistory())
     {
-        p->drawPixmap(d->pixmapRect.right()-24, d->pixmapRect.bottom()-24, QIcon::fromTheme("svn_switch").pixmap(22));
+        p->drawPixmap(d->pixmapRect.right()-24, d->pixmapRect.bottom()-24, QIcon::fromTheme(QLatin1String("svn_switch")).pixmap(22));
     }
 */
 
@@ -329,7 +329,7 @@ void ImportDelegate::paint(QPainter* p, const QStyleOptionViewItem& option, cons
     {
         QStringList tagsList = AlbumManager::instance()->tagNames(info.tagIds);
         tagsList.sort();
-        QString tags         = tagsList.join(", ");
+        QString tags         = tagsList.join(QLatin1String(", "));
         drawTags(p, d->tagRect, tags, isSelected);
     }
 

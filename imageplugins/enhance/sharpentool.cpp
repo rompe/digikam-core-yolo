@@ -61,7 +61,7 @@ class SharpenTool::Private
 public:
 
     Private() :
-        configGroupName("sharpen Tool"),
+        configGroupName(QLatin1String("sharpen Tool")),
         sharpSettings(0),
         previewWidget(0),
         gboxSettings(0)
@@ -78,10 +78,10 @@ SharpenTool::SharpenTool(QObject* const parent)
     : EditorToolThreaded(parent),
       d(new Private)
 {
-    setObjectName("sharpen");
+    setObjectName(QLatin1String("sharpen"));
     setToolName(i18n("Sharpen"));
-    setToolIcon(QIcon::fromTheme("sharpenimage"));
-    setToolHelp("blursharpentool.anchor");
+    setToolIcon(QIcon::fromTheme(QLatin1String("sharpenimage")));
+    setToolHelp(QLatin1String("blursharpentool.anchor"));
 
     // -------------------------------------------------------------
 

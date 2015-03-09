@@ -139,12 +139,12 @@ using namespace KDcrawIface;
 namespace Digikam
 {
 
-EditorWindow::EditorWindow(const char* const name)
+EditorWindow::EditorWindow(const QString& name)
     : DXmlGuiWindow(0),
       d(new Private)
 {
     setConfigGroupName(QLatin1String("ImageViewer Settings"));
-    setObjectName(QLatin1String(name));
+    setObjectName(name);
     setWindowFlags(Qt::Window);
     setFullScreenOptions(FS_EDITOR);
 
@@ -364,7 +364,7 @@ void EditorWindow::setupStandardActions()
     m_saveNewVersionAsAction->setToolTip(i18nc("@info:tooltip", "Save the current modifications to a new version of the file, "
                                                "specifying the filename and format"));
     connect(m_saveNewVersionAsAction, SIGNAL(triggered()), this, SLOT(saveNewVersionAs()));
-    //ac->addAction("editorwindow_savenewversionas", m_saveNewVersionAsAction);
+    //ac->addAction(QLatin1String("editorwindow_savenewversionas"), m_saveNewVersionAsAction);
 
     m_saveNewVersionInFormatAction = new QMenu(i18nc("@action Save As New Version...Save in format...",
                                                      "Save in Format"), this);

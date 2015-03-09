@@ -178,7 +178,8 @@ public:
 };
 
 ImageDescEditTab::ImageDescEditTab(QWidget* const parent)
-    : RVBox(parent), d(new Private)
+    : RVBox(parent),
+      d(new Private)
 {
     setMargin(0);
     setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
@@ -206,7 +207,7 @@ ImageDescEditTab::ImageDescEditTab(QWidget* const parent)
 
     RHBox* const dateBox  = new RHBox(captionTagsArea);
     new QLabel(i18n("Date:"), dateBox);
-    d->dateTimeEdit = new DDateTimeEdit(dateBox, "datepicker");
+    d->dateTimeEdit = new DDateTimeEdit(dateBox, QLatin1String("datepicker"));
 
     RHBox* const pickBox       = new RHBox(captionTagsArea);
     new QLabel(i18n("Pick Label:"), pickBox);
@@ -229,7 +230,7 @@ ImageDescEditTab::ImageDescEditTab(QWidget* const parent)
     applyButtonBox->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
 
     d->applyBtn           = new QPushButton(i18n("Apply"), applyButtonBox);
-    d->applyBtn->setIcon(QIcon::fromTheme("dialog-ok-apply"));
+    d->applyBtn->setIcon(QIcon::fromTheme(QLatin1String("dialog-ok-apply")));
     d->applyBtn->setEnabled(false);
     d->applyBtn->setToolTip( i18n("Apply all changes to images"));
     //buttonsBox->setStretchFactor(d->applyBtn, 10);
@@ -238,12 +239,12 @@ ImageDescEditTab::ImageDescEditTab(QWidget* const parent)
     buttonsBox->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
 
     d->revertBtn          = new QToolButton(buttonsBox);
-    d->revertBtn->setIcon(QIcon::fromTheme("document-revert"));
+    d->revertBtn->setIcon(QIcon::fromTheme(QLatin1String("document-revert")));
     d->revertBtn->setToolTip( i18n("Revert all changes"));
     d->revertBtn->setEnabled(false);
 
     d->applyToAllVersionsButton = new QPushButton(i18n("Apply to all versions"), buttonsBox);
-    d->applyToAllVersionsButton->setIcon(QIcon::fromTheme("dialog-ok-apply"));
+    d->applyToAllVersionsButton->setIcon(QIcon::fromTheme(QLatin1String("dialog-ok-apply")));
     d->applyToAllVersionsButton->setEnabled(false);
     d->applyToAllVersionsButton->setToolTip(i18n("Apply all changes to all versions of this image"));
 
@@ -296,20 +297,20 @@ ImageDescEditTab::ImageDescEditTab(QWidget* const parent)
     RHBox* const tagsSearch = new RHBox(tagsArea);
     tagsSearch->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
 
-    d->tagsSearchBar   = new SearchTextBar(tagsSearch, "ImageDescEditTabTagsSearchBar");
+    d->tagsSearchBar   = new SearchTextBar(tagsSearch, QLatin1String("ImageDescEditTabTagsSearchBar"));
     d->tagsSearchBar->setModel(d->tagCheckView->filteredModel(),
                                AbstractAlbumModel::AlbumIdRole, AbstractAlbumModel::AlbumTitleRole);
     d->tagsSearchBar->setFilterModel(d->tagCheckView->albumFilterModel());
 
     d->assignedTagsBtn = new QToolButton(tagsSearch);
     d->assignedTagsBtn->setToolTip( i18n("Tags already assigned"));
-    d->assignedTagsBtn->setIcon(QIcon::fromTheme("tag-assigned"));
+    d->assignedTagsBtn->setIcon(QIcon::fromTheme(QLatin1String("tag-assigned")));
     d->assignedTagsBtn->setCheckable(true);
 
     d->recentTagsBtn            = new QToolButton(tagsSearch);
     QMenu* const recentTagsMenu = new QMenu(d->recentTagsBtn);
     d->recentTagsBtn->setToolTip( i18n("Recent Tags"));
-    d->recentTagsBtn->setIcon(QIcon::fromTheme("tag-recents"));
+    d->recentTagsBtn->setIcon(QIcon::fromTheme(QLatin1String("tag-recents")));
     d->recentTagsBtn->setIconSize(QSize(16, 16));
     d->recentTagsBtn->setMenu(recentTagsMenu);
     d->recentTagsBtn->setPopupMode(QToolButton::InstantPopup);
@@ -335,7 +336,7 @@ ImageDescEditTab::ImageDescEditTab(QWidget* const parent)
 
     d->templateSelector = new TemplateSelector(infoArea);
     d->templateViewer   = new TemplateViewer(infoArea);
-    d->templateViewer->setObjectName("ImageDescEditTab Expander");
+    d->templateViewer->setObjectName(QLatin1String("ImageDescEditTab Expander"));
 
     grid2->addWidget(d->templateSelector, 0, 0, 1, 2);
     grid2->addWidget(d->templateViewer,   1, 0, 1, 2);
@@ -452,25 +453,25 @@ ImageDescEditTab::~ImageDescEditTab()
 
 void ImageDescEditTab::readSettings(KConfigGroup& group)
 {
-    d->tabWidget->setCurrentIndex(group.readEntry("ImageDescEdit Tab", (int)Private::DESCRIPTIONS));
-    d->titleEdit->setCurrentLanguageCode(group.readEntry("ImageDescEditTab TitleLang", QString()));
-    d->captionsEdit->setCurrentLanguageCode(group.readEntry("ImageDescEditTab CaptionsLang", QString()));
+    d->tabWidget->setCurrentIndex(group.readEntry(QLatin1String("ImageDescEdit Tab"), (int)Private::DESCRIPTIONS));
+    d->titleEdit->setCurrentLanguageCode(group.readEntry(QLatin1String("ImageDescEditTab TitleLang"), QString()));
+    d->captionsEdit->setCurrentLanguageCode(group.readEntry(QLatin1String("ImageDescEditTab CaptionsLang"), QString()));
 
     d->templateViewer->readSettings(group);
 
     d->tagCheckView->setConfigGroup(group);
-    d->tagCheckView->setEntryPrefix("ImageDescEditTab TagCheckView");
+    d->tagCheckView->setEntryPrefix(QLatin1String("ImageDescEditTab TagCheckView"));
     d->tagCheckView->loadState();
     d->tagsSearchBar->setConfigGroup(group);
-    d->tagsSearchBar->setEntryPrefix("ImageDescEditTab SearchBar");
+    d->tagsSearchBar->setEntryPrefix(QLatin1String("ImageDescEditTab SearchBar"));
     d->tagsSearchBar->loadState();
 }
 
 void ImageDescEditTab::writeSettings(KConfigGroup& group)
 {
-    group.writeEntry("ImageDescEdit Tab",             d->tabWidget->currentIndex());
-    group.writeEntry("ImageDescEditTab TitleLang",    d->titleEdit->currentLanguageCode());
-    group.writeEntry("ImageDescEditTab CaptionsLang", d->captionsEdit->currentLanguageCode());
+    group.writeEntry(QLatin1String("ImageDescEdit Tab"),             d->tabWidget->currentIndex());
+    group.writeEntry(QLatin1String("ImageDescEditTab TitleLang"),    d->titleEdit->currentLanguageCode());
+    group.writeEntry(QLatin1String("ImageDescEditTab CaptionsLang"), d->captionsEdit->currentLanguageCode());
 
     d->templateViewer->writeSettings(group);
 
@@ -664,7 +665,7 @@ void ImageDescEditTab::slotAskToApplyChanges(const QList<ImageInfo>& infos, Meta
             text += i18n("<li>tags</li>");
         }
 
-        text += "</ul></p>";
+        text += QLatin1String("</ul></p>");
 
         text += i18n("<p>Do you want to apply your changes?</p>");
     }
@@ -1391,7 +1392,7 @@ void ImageDescEditTab::updateRecentTags()
 
                 if (parent)
                 {
-                    QString text          = album->title() + " (" + parent->prettyUrl() + ')';
+                    QString text          = album->title() + QLatin1String(" (") + parent->prettyUrl() + QLatin1Char(')');
                     QAction* const action = menu->addAction(icon, text, d->recentTagsMapper, SLOT(map()));
                     d->recentTagsMapper->setMapping(action, album->id());
                 }
@@ -1492,9 +1493,9 @@ void ImageDescEditTab::slotApplyChangesToAllVersions()
 
 void ImageDescEditTab::initProgressIndicator()
 {
-    if (!ProgressManager::instance()->findItembyId("ImageDescEditTabProgress"))
+    if (!ProgressManager::instance()->findItembyId(QLatin1String("ImageDescEditTabProgress")))
     {
-        FileActionProgress* const item = new FileActionProgress("ImageDescEditTabProgress");
+        FileActionProgress* const item = new FileActionProgress(QLatin1String("ImageDescEditTabProgress"));
 
         connect(this, SIGNAL(signalProgressMessageChanged(QString)),
                 item, SLOT(slotProgressStatus(QString)));

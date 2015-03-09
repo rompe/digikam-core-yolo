@@ -116,7 +116,7 @@ TagsManager::TagsManager()
       StateSavingObject(this),
       d(new Private())
 {
-    setObjectName("Tags Manager");
+    setObjectName(QLatin1String("Tags Manager"));
     d->tagModel = new TagModel(AbstractAlbumModel::IncludeRootAlbum, this);;
     d->tagModel->setCheckable(false);
     setupUi(this);
@@ -168,14 +168,14 @@ void TagsManager::setupUi(KMainWindow* const Dialog)
      QHBoxLayout* const mainLayout = new QHBoxLayout();
 
      d->tagPixmap = new QLabel();
-     d->tagPixmap->setText("Tag Pixmap");
+     d->tagPixmap->setText(QLatin1String("Tag Pixmap"));
      d->tagPixmap->setMaximumWidth(40);
-     d->tagPixmap->setPixmap(QIcon::fromTheme("tag").pixmap(30,30));
+     d->tagPixmap->setPixmap(QIcon::fromTheme(QLatin1String("tag")).pixmap(30,30));
 
      d->tagMngrView = new TagMngrTreeView(this,d->tagModel);
      d->tagMngrView->setConfigGroup(getConfigGroup());
 
-     d->searchBar  = new SearchTextBar(this, "DigikamViewTagSearchBar");
+     d->searchBar  = new SearchTextBar(this, QLatin1String("DigikamViewTagSearchBar"));
      d->searchBar->setHighlightOnResult(true);
      d->searchBar->setModel(d->tagModel,
                             AbstractAlbumModel::AlbumIdRole,
@@ -269,8 +269,8 @@ namespace
 
 QString JoinTagNamesToList(const QStringList& stringList)
 {
-    const QString joinedStringList = stringList.join(QString("', '"));
-    return QChar('\'') + joinedStringList + QChar('\'');
+    const QString joinedStringList = stringList.join(QLatin1String("', '"));
+    return QLatin1Char('\'') + joinedStringList + QLatin1Char('\'');
 }
 
 } // namespace
@@ -292,6 +292,7 @@ void TagsManager::slotDeleteAction()
         }
 
         TAlbum* const t = static_cast<TAlbum*>(d->tagMngrView->albumForIndex(index));
+
         if (!t || t->isRoot())
         {
             return;
@@ -414,7 +415,7 @@ void TagsManager::slotResetTagIcon()
     QString errMsg;
 
     const QList<Album*> selected = d->tagMngrView->selectedTags();
-    const QString icon = QString("tag");
+    const QString icon = QLatin1String("tag");
 
     for (QList<Album*>::const_iterator it = selected.constBegin(); it != selected.constEnd(); ++it )
     {
@@ -652,29 +653,29 @@ void TagsManager::setupActions()
 
     d->mainToolbar->addSeparator();
 
-    d->addAction = new QAction(QIcon::fromTheme("list-add"),"",d->treeWindow);
+    d->addAction = new QAction(QIcon::fromTheme(QLatin1String("list-add")), QLatin1String(""), d->treeWindow);
 
-    d->delAction = new QAction(QIcon::fromTheme("list-remove"),"",d->treeWindow);
+    d->delAction = new QAction(QIcon::fromTheme(QLatin1String("list-remove")), QLatin1String(""), d->treeWindow);
 
     /** organize group **/
     d->organizeAction            = new QMenu(i18nc("@title:menu", "Organize"),this);
-    d->organizeAction->setIcon(QIcon::fromTheme("autocorrection"));
+    d->organizeAction->setIcon(QIcon::fromTheme(QLatin1String("autocorrection")));
 
-    QAction* const resetIcon     = new QAction(QIcon::fromTheme("view-refresh"),
+    QAction* const resetIcon     = new QAction(QIcon::fromTheme(QLatin1String("view-refresh")),
                                          i18n("Reset tag Icon"), this);
 
-    QAction* const createTagAddr = new QAction(QIcon::fromTheme("tag-addressbook"),
+    QAction* const createTagAddr = new QAction(QIcon::fromTheme(QLatin1String("tag-addressbook")),
                                          i18n("Create Tag from Address Book"),
                                          this);
-    QAction* const invSel        = new QAction(QIcon::fromTheme("tag-reset"),
+    QAction* const invSel        = new QAction(QIcon::fromTheme(QLatin1String("tag-reset")),
                                          i18n("Invert Selection"), this);
 
-    QAction* const expandTree    = new QAction(QIcon::fromTheme("format-indent-more"),
+    QAction* const expandTree    = new QAction(QIcon::fromTheme(QLatin1String("format-indent-more")),
                                          i18n("Expand Tag Tree"), this);
 
-    QAction* const expandSel     = new QAction(QIcon::fromTheme("format-indent-more"),
+    QAction* const expandSel     = new QAction(QIcon::fromTheme(QLatin1String("format-indent-more")),
                                          i18n("Expand Selected Nodes"), this);
-    QAction* const delTagFromImg = new QAction(QIcon::fromTheme("tag-delete"),
+    QAction* const delTagFromImg = new QAction(QIcon::fromTheme(QLatin1String("tag-delete")),
                                          i18n("Remove Tag from Images"), this);
 
     /** Tool tips  **/
@@ -725,16 +726,16 @@ void TagsManager::setupActions()
 
     /** Sync & Export Group **/
     d->syncexportAction     = new QMenu(i18n("Sync &Export"), this);
-    d->syncexportAction->setIcon(QIcon::fromTheme("server-database"));
+    d->syncexportAction->setIcon(QIcon::fromTheme(QLatin1String("server-database")));
 
-    QAction* const wrDbImg  = new QAction(QIcon::fromTheme("view-refresh"),
+    QAction* const wrDbImg  = new QAction(QIcon::fromTheme(QLatin1String("view-refresh")),
                                           i18n("Write Tags from Database "
                                               "to Image"), this);
 
-    QAction* const readTags = new QAction(QIcon::fromTheme("tag-new"),
+    QAction* const readTags = new QAction(QIcon::fromTheme(QLatin1String("tag-new")),
                                           i18n("Read Tags from Image"), this);
 
-    QAction* const wipeAll  = new QAction(QIcon::fromTheme("draw-eraser"),
+    QAction* const wipeAll  = new QAction(QIcon::fromTheme(QLatin1String("draw-eraser")),
                                           i18n("Wipe all tags from Database only"), this);
 
 
@@ -770,7 +771,7 @@ void TagsManager::setupActions()
      * Right Toolbar with vertical properties button
      */
     d->rightToolBar = new DMultiTabBar(Qt::RightEdge);
-    d->rightToolBar->appendTab(QIcon::fromTheme("tag-properties").pixmap(style()->pixelMetric(QStyle::PM_SmallIconSize)), 0, i18n("Tag Properties"));
+    d->rightToolBar->appendTab(QIcon::fromTheme(QLatin1String("tag-properties")).pixmap(style()->pixelMetric(QStyle::PM_SmallIconSize)), 0, i18n("Tag Properties"));
     d->rightToolBar->setStyle(DMultiTabBar::AllIconsText);
 
     connect(d->rightToolBar->tab(0), SIGNAL(clicked()),

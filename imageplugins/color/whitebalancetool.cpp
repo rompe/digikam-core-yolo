@@ -77,18 +77,18 @@ public:
     EditorToolSettings*  gboxSettings;
 };
 
-const QString WhiteBalanceTool::Private::configGroupName("whitebalance Tool");
-const QString WhiteBalanceTool::Private::configHistogramChannelEntry("Histogram Chanel");
-const QString WhiteBalanceTool::Private::configHistogramScaleEntry("Histogram Scale");
+const QString WhiteBalanceTool::Private::configGroupName(QLatin1String("whitebalance Tool"));
+const QString WhiteBalanceTool::Private::configHistogramChannelEntry(QLatin1String("Histogram Chanel"));
+const QString WhiteBalanceTool::Private::configHistogramScaleEntry(QLatin1String("Histogram Scale"));
 
 // --------------------------------------------------------
 
 WhiteBalanceTool::WhiteBalanceTool(QObject* const parent)
     : EditorToolThreaded(parent), d(new Private)
 {
-    setObjectName("whitebalance");
+    setObjectName(QLatin1String("whitebalance"));
     setToolName(i18n("White Balance"));
-    setToolIcon(QIcon::fromTheme("whitebalance"));
+    setToolIcon(QIcon::fromTheme(QLatin1String("whitebalance")));
     setInitPreview(true);
 
     // -------------------------------------------------------------

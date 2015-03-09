@@ -145,9 +145,10 @@ bool ImageWindow::imageWindowCreated()
 }
 
 ImageWindow::ImageWindow()
-    : EditorWindow("Image Editor"), d(new Private)
+    : EditorWindow(QLatin1String("Image Editor")),
+      d(new Private)
 {
-    setXMLFile("digikamimagewindowui.rc");
+    setXMLFile(QLatin1String("digikamimagewindowui.rc"));
 
     m_instance = this;
     // We don't want to be deleted on close
@@ -188,11 +189,11 @@ ImageWindow::ImageWindow()
     applyMainWindowSettings(group);
     d->thumbBarDock->setShouldBeVisible(group.readEntry(d->configShowThumbbarEntry, false));
     setAutoSaveSettings(configGroupName(), true);
-    d->viewContainer->setAutoSaveSettings("ImageViewer Thumbbar", true);
+    d->viewContainer->setAutoSaveSettings(QLatin1String("ImageViewer Thumbbar"), true);
 
     //-------------------------------------------------------------
 
-    d->rightSideBar->setConfigGroup(KConfigGroup(&group, "Right Sidebar"));
+    d->rightSideBar->setConfigGroup(KConfigGroup(&group, QLatin1String("Right Sidebar")));
     d->rightSideBar->loadState();
     d->rightSideBar->populateTags();
 
@@ -286,7 +287,7 @@ void ImageWindow::setupUserArea()
     m_splitter->setStretchFactor(0, 10);      // set Canvas default size to max.
 
     d->rightSideBar = new ImagePropertiesSideBarDB(widget, m_splitter, Qt::RightEdge, true);
-    d->rightSideBar->setObjectName("ImageEditor Right Sidebar");
+    d->rightSideBar->setObjectName(QLatin1String("ImageEditor Right Sidebar"));
     d->rightSideBar->getFiltersHistoryTab()->addOpenImageAction();
 
     hlay->addWidget(m_splitter);
@@ -339,7 +340,7 @@ void ImageWindow::setupUserArea()
 
     // The thumb bar is placed in a detachable/dockable widget.
     d->thumbBarDock     = new ThumbBarDock(d->viewContainer, Qt::Tool);
-    d->thumbBarDock->setObjectName("editor_thumbbar");
+    d->thumbBarDock->setObjectName(QLatin1String("editor_thumbbar"));
 
     d->thumbBar         = new ImageThumbnailBar(d->thumbBarDock);
     d->thumbBar->setModels(d->imageInfoModel, d->imageFilterModel);
@@ -412,37 +413,37 @@ void ImageWindow::setupActions()
 
     KActionCollection *ac = actionCollection();
 
-    d->toMainWindowAction = new QAction(QIcon::fromTheme("view-list-icons"),
+    d->toMainWindowAction = new QAction(QIcon::fromTheme(QLatin1String("view-list-icons")),
                                         i18nc("@action Finish editing, close editor, back to main window", "Close Editor"), this);
     connect(d->toMainWindowAction, SIGNAL(triggered()), this, SLOT(slotToMainWindow()));
-    ac->addAction("imageview_tomainwindow", d->toMainWindowAction);
+    ac->addAction(QLatin1String("imageview_tomainwindow"), d->toMainWindowAction);
 
 
     // -- Special Delete actions ---------------------------------------------------------------
 
     // Pop up dialog to ask user whether to permanently delete
 
-    d->fileDeletePermanentlyAction = new QAction(QIcon::fromTheme("edit-delete"), i18n("Delete File Permanently"), this);
+    d->fileDeletePermanentlyAction = new QAction(QIcon::fromTheme(QLatin1String("edit-delete")), i18n("Delete File Permanently"), this);
     connect(d->fileDeletePermanentlyAction, SIGNAL(triggered()),
             this, SLOT(slotDeleteCurrentItemPermanently()));
-    ac->addAction("image_delete_permanently", d->fileDeletePermanentlyAction);
+    ac->addAction(QLatin1String("image_delete_permanently"), d->fileDeletePermanentlyAction);
     ac->setDefaultShortcut(d->fileDeletePermanentlyAction, Qt::SHIFT + Qt::Key_Delete);
 
     // These two actions are hidden, no menu entry, no toolbar entry, no shortcut.
     // Power users may add them.
 
-    d->fileDeletePermanentlyDirectlyAction = new QAction(QIcon::fromTheme("edit-delete"),
+    d->fileDeletePermanentlyDirectlyAction = new QAction(QIcon::fromTheme(QLatin1String("edit-delete")),
                                                          i18n("Delete Permanently without Confirmation"), this);
     connect(d->fileDeletePermanentlyDirectlyAction, SIGNAL(triggered()),
             this, SLOT(slotDeleteCurrentItemPermanentlyDirectly()));
-    ac->addAction("image_delete_permanently_directly",
+    ac->addAction(QLatin1String("image_delete_permanently_directly"),
                                   d->fileDeletePermanentlyDirectlyAction);
 
-    d->fileTrashDirectlyAction = new QAction(QIcon::fromTheme("user-trash"),
+    d->fileTrashDirectlyAction = new QAction(QIcon::fromTheme(QLatin1String("user-trash")),
                                              i18n("Move to Trash without Confirmation"), this);
     connect(d->fileTrashDirectlyAction, SIGNAL(triggered()),
             this, SLOT(slotTrashCurrentItemDirectly()));
-    ac->addAction("image_trash_directly", d->fileTrashDirectlyAction);
+    ac->addAction(QLatin1String("image_trash_directly"), d->fileTrashDirectlyAction);
 
     // ---------------------------------------------------------------------------------
 
@@ -452,17 +453,17 @@ void ImageWindow::setupActions()
     TagsActionMngr::defaultManager()->registerLabelsActions(ac);
 
     QAction* const editTitles = new QAction(i18n("Edit Titles"), this);
-    ac->addAction("edit_titles", editTitles);
+    ac->addAction(QLatin1String("edit_titles"), editTitles);
     ac->setDefaultShortcut(editTitles, Qt::META + Qt::Key_T);
     connect(editTitles, SIGNAL(triggered()), this, SLOT(slotRightSideBarActivateTitles()));
 
     QAction* const editComments = new QAction(i18n("Edit Comments"), this);
-    ac->addAction("edit_comments", editComments);
+    ac->addAction(QLatin1String("edit_comments"), editComments);
     ac->setDefaultShortcut(editComments, Qt::META + Qt::Key_C);
     connect(editComments, SIGNAL(triggered()), this, SLOT(slotRightSideBarActivateComments()));
 
     QAction* const assignedTags = new QAction(i18n("Show Assigned Tags"), this);
-    ac->addAction("assigned _tags", assignedTags);
+    ac->addAction(QLatin1String("assigned _tags"), assignedTags);
     ac->setDefaultShortcut(assignedTags, Qt::META + Qt::Key_A);
     connect(assignedTags, SIGNAL(triggered()), this, SLOT(slotRightSideBarActivateAssignedTags()));
 }
@@ -958,7 +959,7 @@ void ImageWindow::saveIsComplete()
     d->currentImageInfo.setOrientation(meta.getImageOrientation());
 
     // Pop-up a message to bring user when save is done.
-    DNotificationWrapper("editorsavefilecompleted", i18n("Image saved successfully"),
+    DNotificationWrapper(QLatin1String("editorsavefilecompleted"), i18n("Image saved successfully"),
                          this, windowTitle());
 
     resetOrigin();
@@ -1056,7 +1057,7 @@ void ImageWindow::saveAsIsComplete()
     slotUpdateItemInfo();
 
     // Pop-up a message to bring user when save is done.
-    DNotificationWrapper("editorsavefilecompleted", i18n("Image saved successfully"),
+    DNotificationWrapper(QLatin1String("editorsavefilecompleted"), i18n("Image saved successfully"),
                          this, windowTitle());
 }
 
@@ -1579,9 +1580,9 @@ void ImageWindow::slotOpenOriginal()
     {
         QUrl url;
         url = url.adjusted(QUrl::StripTrailingSlash);
-        url.setPath(url.path() + '/' + (id.m_filePath));
+        url.setPath(url.path() + QLatin1Char('/') + (id.m_filePath));
         url = url.adjusted(QUrl::StripTrailingSlash);
-        url.setPath(url.path() + '/' + (id.m_fileName));
+        url.setPath(url.path() + QLatin1Char('/') + (id.m_fileName));
         imageInfos << ImageInfo::fromUrl(url);
     }
 

@@ -418,9 +418,9 @@ TagsPopupMenu::TagsPopupMenu(const QList<qlonglong>& selectedImageIds, Mode mode
 void TagsPopupMenu::setup(Mode mode)
 {
     d->mode                 = mode;
-    d->addTagPix            = QIcon::fromTheme("tag").pixmap(style()->pixelMetric(QStyle::PM_SmallIconSize));
-    d->recentTagPix         = QIcon::fromTheme("tag-assigned").pixmap(style()->pixelMetric(QStyle::PM_SmallIconSize));
-    d->tagViewPix           = QIcon::fromTheme("imagecomment").pixmap(style()->pixelMetric(QStyle::PM_SmallIconSize));
+    d->addTagPix            = QIcon::fromTheme(QLatin1String("tag")).pixmap(style()->pixelMetric(QStyle::PM_SmallIconSize));
+    d->recentTagPix         = QIcon::fromTheme(QLatin1String("tag-assigned")).pixmap(style()->pixelMetric(QStyle::PM_SmallIconSize));
+    d->tagViewPix           = QIcon::fromTheme(QLatin1String("imagecomment")).pixmap(style()->pixelMetric(QStyle::PM_SmallIconSize));
     d->addTagActions        = new QActionGroup(this);
     d->toggleTagActions     = new QActionGroup(this);
 
@@ -536,8 +536,8 @@ void TagsPopupMenu::slotAboutToShow()
 
                     if (parent)
                     {
-                        QString t               = album->title() + " (" + parent->prettyUrl() + ')';
-                        t.replace('&', "&&");
+                        QString t               = album->title() + QLatin1String(" (") + parent->prettyUrl() + QLatin1Char(')');
+                        t.replace(QLatin1Char('&'), QLatin1String("&&"));
                         TagToggleAction* action = new TagToggleAction(t, d->toggleTagActions);
                         action->setData(album->id());
                         action->setCheckBoxHidden(true);
@@ -625,7 +625,7 @@ void TagsPopupMenu::iterateAndBuildMenu(QMenu* menu, TAlbum* album)
         }
 
         QString t = a->title();
-        t.replace('&', "&&");
+        t.replace(QLatin1Char('&'), QLatin1String("&&"));
 
         TagToggleAction* action = 0;
 
@@ -728,7 +728,7 @@ void TagsPopupMenu::buildFlatMenu(QMenu* menu)
     for (int i=0; i<shortenedPaths.size(); ++i)
     {
         QString t       = shortenedPaths.at(i);
-        t.replace('&', "&&");
+        t.replace(QLatin1Char('&'), QLatin1String("&&"));
         TAlbum* const a = AlbumManager::instance()->findTAlbum(ids.at(i));
 
         if (!a)

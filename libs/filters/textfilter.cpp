@@ -76,7 +76,7 @@ public:
 TextFilter::TextFilter(QWidget* const parent)
     : RHBox(parent), d(new Private)
 {
-    d->searchTextBar = new SearchTextBar(this, "AlbumIconViewFilterSearchTextBar");
+    d->searchTextBar = new SearchTextBar(this, QLatin1String("AlbumIconViewFilterSearchTextBar"));
     d->searchTextBar->setTextQueryCompletion(true);
     d->searchTextBar->setToolTip(i18n("Text quick filter (search)"));
     d->searchTextBar->setWhatsThis(i18n("Enter search patterns to quickly filter this view on "
@@ -84,7 +84,7 @@ TextFilter::TextFilter(QWidget* const parent)
 
     d->optionsBtn = new QToolButton(this);
     d->optionsBtn->setToolTip( i18n("Text Search Fields"));
-    d->optionsBtn->setIcon(QIcon::fromTheme("configure"));
+    d->optionsBtn->setIcon(QIcon::fromTheme(QLatin1String("configure")));
     d->optionsBtn->setPopupMode(QToolButton::InstantPopup);
     d->optionsBtn->setWhatsThis(i18n("Defines which fields to search for the text in."));
 

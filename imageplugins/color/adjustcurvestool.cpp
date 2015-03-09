@@ -76,9 +76,9 @@ public:
     EditorToolSettings*  gboxSettings;
 };
 
-const QString AdjustCurvesTool::Private::configGroupName("adjustcurves Tool");
-const QString AdjustCurvesTool::Private::configHistogramChannelEntry("Histogram Channel");
-const QString AdjustCurvesTool::Private::configHistogramScaleEntry("Histogram Scale");
+const QString AdjustCurvesTool::Private::configGroupName(QLatin1String("adjustcurves Tool"));
+const QString AdjustCurvesTool::Private::configHistogramChannelEntry(QLatin1String("Histogram Channel"));
+const QString AdjustCurvesTool::Private::configHistogramScaleEntry(QLatin1String("Histogram Scale"));
 
 // --------------------------------------------------------
 
@@ -86,9 +86,9 @@ AdjustCurvesTool::AdjustCurvesTool(QObject* const parent)
     : EditorToolThreaded(parent),
       d(new Private)
 {
-    setObjectName("adjustcurves");
+    setObjectName(QLatin1String("adjustcurves"));
     setToolName(i18n("Adjust Curves"));
-    setToolIcon(QIcon::fromTheme("adjustcurves"));
+    setToolIcon(QIcon::fromTheme(QLatin1String("adjustcurves")));
 
     // -------------------------------------------------------------
 

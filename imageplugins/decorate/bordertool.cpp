@@ -52,7 +52,7 @@ class BorderTool::Private
 public:
 
     Private() :
-        configGroupName("border Tool"),
+        configGroupName(QLatin1String("border Tool")),
 
         gboxSettings(0),
         previewWidget(0),
@@ -70,9 +70,9 @@ BorderTool::BorderTool(QObject* const parent)
     : EditorToolThreaded(parent),
       d(new Private)
 {
-    setObjectName("border");
+    setObjectName(QLatin1String("border"));
     setToolName(i18n("Add Border"));
-    setToolIcon(QIcon::fromTheme("bordertool"));
+    setToolIcon(QIcon::fromTheme(QLatin1String("bordertool")));
 
     d->previewWidget = new ImageGuideWidget(0, false, ImageGuideWidget::HVGuideMode);
     setToolView(d->previewWidget);

@@ -100,8 +100,8 @@ QueueMgrWindow::QueueMgrWindow()
     : DXmlGuiWindow(0),
       d(new Private)
 {
-    setConfigGroupName("Batch Queue Manager Settings");
-    setXMLFile("queuemgrwindowui.rc");
+    setConfigGroupName(QLatin1String("Batch Queue Manager Settings"));
+    setXMLFile(QLatin1String("queuemgrwindowui.rc"));
 
     qRegisterMetaType<BatchToolSettings>("BatchToolSettings");
     qRegisterMetaType<BatchToolSet>("BatchToolSet");
@@ -246,7 +246,7 @@ void QueueMgrWindow::setupStatusBar()
     d->statusProgressBar->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
     d->statusProgressBar->setMaximumHeight(fontMetrics().height() + 2);
     d->statusProgressBar->setNotify(true);
-    d->statusProgressBar->setNotificationTitle(i18n("Batch Queue Manager"), QIcon::fromTheme("bqm-diff"));
+    d->statusProgressBar->setNotificationTitle(i18n("Batch Queue Manager"), QIcon::fromTheme(QLatin1String("bqm-diff")));
     statusBar()->addWidget(d->statusProgressBar, 60);
 
     d->statusLabel = new QLabel(statusBar());
@@ -324,74 +324,74 @@ void QueueMgrWindow::setupActions()
 {
     // -- Standard 'File' menu actions ---------------------------------------------
 
-    KActionCollection *ac = actionCollection();
+    KActionCollection* const ac = actionCollection();
 
-    d->runAction = new QAction(QIcon::fromTheme("media-playback-start"), i18n("Run"), this);
+    d->runAction = new QAction(QIcon::fromTheme(QLatin1String("media-playback-start")), i18n("Run"), this);
     d->runAction->setEnabled(false);
     connect(d->runAction, SIGNAL(triggered()), this, SLOT(slotRun()));
-    ac->addAction("queuemgr_run", d->runAction);
+    ac->addAction(QLatin1String("queuemgr_run"), d->runAction);
     ac->setDefaultShortcut(d->runAction, Qt::CTRL + Qt::Key_P);
 
-    d->stopAction = new QAction(QIcon::fromTheme("media-playback-stop"), i18n("Stop"), this);
+    d->stopAction = new QAction(QIcon::fromTheme(QLatin1String("media-playback-stop")), i18n("Stop"), this);
     d->stopAction->setEnabled(false);
     connect(d->stopAction, SIGNAL(triggered()), this, SLOT(slotStop()));
-    ac->addAction("queuemgr_stop", d->stopAction);
+    ac->addAction(QLatin1String("queuemgr_stop"), d->stopAction);
     ac->setDefaultShortcut(d->stopAction, Qt::CTRL + Qt::Key_S);
 
-    d->newQueueAction = new QAction(QIcon::fromTheme("bqm-addqueue"), i18n("New Queue"), this);
+    d->newQueueAction = new QAction(QIcon::fromTheme(QLatin1String("bqm-addqueue")), i18n("New Queue"), this);
     connect(d->newQueueAction, SIGNAL(triggered()), d->queuePool, SLOT(slotAddQueue()));
-    ac->addAction("queuemgr_newqueue", d->newQueueAction);
+    ac->addAction(QLatin1String("queuemgr_newqueue"), d->newQueueAction);
 
-    d->removeQueueAction = new QAction(QIcon::fromTheme("bqm-rmqueue"), i18n("Remove Queue"), this);
+    d->removeQueueAction = new QAction(QIcon::fromTheme(QLatin1String("bqm-rmqueue")), i18n("Remove Queue"), this);
     connect(d->removeQueueAction, SIGNAL(triggered()), d->queuePool, SLOT(slotRemoveCurrentQueue()));
-    ac->addAction("queuemgr_removequeue", d->removeQueueAction);
+    ac->addAction(QLatin1String("queuemgr_removequeue"), d->removeQueueAction);
 
     // TODO rename action to saveWorkflowAction to avoid confusion?
-    d->saveQueueAction = new QAction(QIcon::fromTheme("document-save"), i18n("Save Workflow"), this);
+    d->saveQueueAction = new QAction(QIcon::fromTheme(QLatin1String("document-save")), i18n("Save Workflow"), this);
     connect(d->saveQueueAction, SIGNAL(triggered()), this, SLOT(slotSaveWorkflow()));
-    ac->addAction("queuemgr_savequeue", d->saveQueueAction);
+    ac->addAction(QLatin1String("queuemgr_savequeue"), d->saveQueueAction);
 
-    d->removeItemsSelAction = new QAction(QIcon::fromTheme("list-remove"), i18n("Remove items"), this);
+    d->removeItemsSelAction = new QAction(QIcon::fromTheme(QLatin1String("list-remove")), i18n("Remove items"), this);
     d->removeItemsSelAction->setEnabled(false);
     connect(d->removeItemsSelAction, SIGNAL(triggered()), d->queuePool, SLOT(slotRemoveSelectedItems()));
-    ac->addAction("queuemgr_removeitemssel", d->removeItemsSelAction);
+    ac->addAction(QLatin1String("queuemgr_removeitemssel"), d->removeItemsSelAction);
     ac->setDefaultShortcut(d->removeItemsSelAction, Qt::CTRL + Qt::Key_K);
 
     d->removeItemsDoneAction = new QAction(i18n("Remove processed items"), this);
     d->removeItemsDoneAction->setEnabled(false);
     connect(d->removeItemsDoneAction, SIGNAL(triggered()), d->queuePool, SLOT(slotRemoveItemsDone()));
-    ac->addAction("queuemgr_removeitemsdone", d->removeItemsDoneAction);
+    ac->addAction(QLatin1String("queuemgr_removeitemsdone"), d->removeItemsDoneAction);
 
-    d->clearQueueAction = new QAction(QIcon::fromTheme("edit-clear"), i18n("Clear Queue"), this);
+    d->clearQueueAction = new QAction(QIcon::fromTheme(QLatin1String("edit-clear")), i18n("Clear Queue"), this);
     d->clearQueueAction->setEnabled(false);
     connect(d->clearQueueAction, SIGNAL(triggered()), d->queuePool, SLOT(slotClearList()));
-    ac->addAction("queuemgr_clearlist", d->clearQueueAction);
+    ac->addAction(QLatin1String("queuemgr_clearlist"), d->clearQueueAction);
     ac->setDefaultShortcut(d->clearQueueAction, Qt::CTRL + Qt::SHIFT + Qt::Key_K);
 
     QAction* const close = buildStdAction(StdCloseAction, this, SLOT(close()), this);
-    ac->addAction("queuemgr_close", close);
+    ac->addAction(QLatin1String("queuemgr_close"), close);
 
     // -- 'Tools' menu actions -----------------------------------------------------
 
-    d->moveUpToolAction = new QAction(QIcon::fromTheme("bqm-commit"), i18n("Move up"), this);
+    d->moveUpToolAction = new QAction(QIcon::fromTheme(QLatin1String("bqm-commit")), i18n("Move up"), this);
     connect(d->moveUpToolAction, SIGNAL(triggered()), d->assignedList, SLOT(slotMoveCurrentToolUp()));
-    ac->addAction("queuemgr_toolup", d->moveUpToolAction);
+    ac->addAction(QLatin1String("queuemgr_toolup"), d->moveUpToolAction);
 
-    d->moveDownToolAction = new QAction(QIcon::fromTheme("bqm-update"), i18n("Move down"), this);
+    d->moveDownToolAction = new QAction(QIcon::fromTheme(QLatin1String("bqm-update")), i18n("Move down"), this);
     connect(d->moveDownToolAction, SIGNAL(triggered()), d->assignedList, SLOT(slotMoveCurrentToolDown()));
-    ac->addAction("queuemgr_tooldown", d->moveDownToolAction);
+    ac->addAction(QLatin1String("queuemgr_tooldown"), d->moveDownToolAction);
 
-    d->removeToolAction = new QAction(QIcon::fromTheme("bqm-remove"), i18n("Remove tool"), this);
+    d->removeToolAction = new QAction(QIcon::fromTheme(QLatin1String("bqm-remove")), i18n("Remove tool"), this);
     connect(d->removeToolAction, SIGNAL(triggered()), d->assignedList, SLOT(slotRemoveCurrentTool()));
-    ac->addAction("queuemgr_toolremove", d->removeToolAction);
+    ac->addAction(QLatin1String("queuemgr_toolremove"), d->removeToolAction);
 
-    d->clearToolsAction = new QAction(QIcon::fromTheme("edit-clear-list"), i18n("Clear List"), this);
+    d->clearToolsAction = new QAction(QIcon::fromTheme(QLatin1String("edit-clear-list")), i18n("Clear List"), this);
     connect(d->clearToolsAction, SIGNAL(triggered()), d->assignedList, SLOT(slotClearToolsList()));
-    ac->addAction("queuemgr_toolsclear", d->clearToolsAction);
+    ac->addAction(QLatin1String("queuemgr_toolsclear"), d->clearToolsAction);
 
     // -- Standard 'View' menu actions ---------------------------------------------
 
-    createFullScreenAction("queuemgr_fullscreen");
+    createFullScreenAction(QLatin1String("queuemgr_fullscreen"));
 
     // -- Standard 'Configure' menu actions ----------------------------------------
 
@@ -483,7 +483,7 @@ void QueueMgrWindow::refreshStatusBar()
             break;
     }
 
-    message.append(" / ");
+    message.append(QLatin1String(" / "));
 
     switch (tasks)
     {
@@ -496,7 +496,7 @@ void QueueMgrWindow::refreshStatusBar()
             break;
     }
 
-    message.append(" - Total: ");
+    message.append(i18n(" - Total: "));
 
     switch (totalItems)
     {
@@ -509,7 +509,7 @@ void QueueMgrWindow::refreshStatusBar()
             break;
     }
 
-    message.append(" / ");
+    message.append(QLatin1String(" / "));
 
     switch (totalTasks)
     {
@@ -958,7 +958,7 @@ void QueueMgrWindow::slotQueueProcessed()
     if (d->currentQueueToProcess == d->queuePool->count())
     {
         // Pop-up a message to bring user when all is done.
-        DNotificationWrapper("batchqueuecompleted", i18n("Batch queue finished"),
+        DNotificationWrapper(QLatin1String("batchqueuecompleted"), i18n("Batch queue finished"),
                              this, windowTitle());
 
         processingAborted();
@@ -977,6 +977,7 @@ void QueueMgrWindow::slotAssignQueueSettings(const QString& title)
     {
         Workflow q                 = WorkflowManager::instance()->findByTitle(title);
         QueueListView* const queue = d->queuePool->currentQueue();
+
         if (queue)
         {
             queue->setSettings(q.qSettings);

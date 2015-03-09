@@ -65,9 +65,10 @@ public:
 };
 
 RatingFilterWidget::RatingFilterWidget(QWidget* const parent)
-    : RatingWidget(parent), d(new Private)
+    : RatingWidget(parent),
+      d(new Private)
 {
-    d->ratingTracker = new DCursorTracker("", this);
+    d->ratingTracker = new DCursorTracker(QLatin1String(""), this);
     updateRatingTooltip();
     setMouseTracking(true);
 
@@ -217,13 +218,14 @@ public:
 };
 
 RatingFilter::RatingFilter(QWidget* const parent)
-    : RHBox(parent), d(new Private)
+    : RHBox(parent),
+      d(new Private)
 {
     d->ratingWidget = new RatingFilterWidget(this);
 
     d->optionsBtn   = new QToolButton(this);
     d->optionsBtn->setToolTip( i18n("Rating Filter Options"));
-    d->optionsBtn->setIcon(QIcon::fromTheme("configure"));
+    d->optionsBtn->setIcon(QIcon::fromTheme(QLatin1String("configure")));
     d->optionsBtn->setPopupMode(QToolButton::InstantPopup);
 
     d->optionsMenu  = new QMenu(d->optionsBtn);

@@ -146,7 +146,6 @@ target_link_libraries(digikamgui
                       digikamwidgets
                       digikamdatabase
                       digikammodels
-                      digikamtags
                       filters
                       dimg
                       dthread
@@ -163,19 +162,21 @@ target_link_libraries(digikamgui
                       fuzzysearch
                       fileactionmanager
                       maintenance
+                      digikamtags
 
                       Qt5::Core
                       Qt5::Gui
                       Qt5::Widgets
                       Qt5::Sql
                       Qt5::WebKitWidgets
+                      Qt5::PrintSupport
 
                       KF5::Solid
                       KF5::KIOCore
                       KF5::NotifyConfig
                       KF5::WindowSystem
-
-                      KF5::KDELibs4Support
+                      KF5::IconThemes
+                      KF5::I18n
 )
 
 # TODO check if these linkings are required?
@@ -192,7 +193,7 @@ if(APPLE)
 endif()
 
 if(${KF5Kipi_FOUND})
-    target_link_libraries(digikamgui KF5::Kipi)
+    target_link_libraries(digikamgui kipiiface)
 endif()
 
 if(${KF5KGeoMap_FOUND}) # fixme hackish

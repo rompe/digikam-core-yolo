@@ -79,20 +79,20 @@ DeleteItem::DeleteItem(QTreeWidget* const parent, const QUrl& url)
 {
     d->url = url;
 
-    if (d->url.scheme() == "digikamalbums")
+    if (d->url.scheme() == QLatin1String("digikamalbums"))
     {
         if (DatabaseUrl(d->url).isAlbumUrl())
         {
-            setThumb(QIcon::fromTheme("folder").pixmap(parent->iconSize().width()));
+            setThumb(QIcon::fromTheme(QLatin1String("folder")).pixmap(parent->iconSize().width()));
         }
         else
         {
-            setThumb(QIcon::fromTheme("tag").pixmap(parent->iconSize().width()));
+            setThumb(QIcon::fromTheme(QLatin1String("tag")).pixmap(parent->iconSize().width()));
         }
     }
     else
     {
-        setThumb(QIcon::fromTheme("image-x-generic").pixmap(parent->iconSize().width(), QIcon::Disabled), false);
+        setThumb(QIcon::fromTheme(QLatin1String("image-x-generic")).pixmap(parent->iconSize().width(), QIcon::Disabled), false);
     }
 
     setText(1, fileUrl());
@@ -119,7 +119,7 @@ QString DeleteItem::fileUrl() const
     {
         return (d->url.toLocalFile());
     }
-    else if (d->url.scheme() == "digikamalbums")
+    else if (d->url.scheme() == QLatin1String("digikamalbums"))
     {
         return (DatabaseUrl(d->url).fileUrl().toLocalFile());
     }
@@ -168,7 +168,8 @@ public:
 };
 
 DeleteItemList::DeleteItemList(QWidget* const parent)
-    : QTreeWidget(parent), d(new Private)
+    : QTreeWidget(parent),
+      d(new Private)
 {
     d->thumbLoadThread = ThumbnailLoadThread::defaultThread();
 
@@ -199,7 +200,7 @@ void DeleteItemList::slotThumbnailLoaded(const LoadingDescription& desc, const Q
 
     while (*it)
     {
-        DeleteItem* item = dynamic_cast<DeleteItem*>(*it);
+        DeleteItem* const item = dynamic_cast<DeleteItem*>(*it);
 
         if (item && item->fileUrl() == desc.filePath)
         {
@@ -216,7 +217,7 @@ void DeleteItemList::slotThumbnailLoaded(const LoadingDescription& desc, const Q
 
 void DeleteItemList::drawRow(QPainter* p, const QStyleOptionViewItem& opt, const QModelIndex& index) const
 {
-    DeleteItem* item = dynamic_cast<DeleteItem*>(itemFromIndex(index));
+    DeleteItem* const item = dynamic_cast<DeleteItem*>(itemFromIndex(index));
 
     if (item && !item->hasValidThumbnail())
     {
@@ -261,16 +262,17 @@ public:
 };
 
 DeleteWidget::DeleteWidget(QWidget* const parent)
-    : QWidget(parent), d(new Private)
+    : QWidget(parent),
+      d(new Private)
 {
-    setObjectName("DeleteDialogBase");
+    setObjectName(QLatin1String("DeleteDialogBase"));
 
     resize(540, 370);
     setMinimumSize(QSize(420, 320));
 
     d->checkBoxStack = new QStackedWidget(this);
     QLabel* logo     = new QLabel(this);
-    logo->setPixmap(QPixmap(QStandardPaths::locate(QStandardPaths::GenericDataLocation, "digikam/data/logo-digikam.png"))
+    logo->setPixmap(QPixmap(QStandardPaths::locate(QStandardPaths::GenericDataLocation, QLatin1String("digikam/data/logo-digikam.png")))
                     .scaled(64, 64, Qt::KeepAspectRatio, Qt::SmoothTransformation));
 
     d->warningIcon   = new QLabel(this);
@@ -317,7 +319,7 @@ DeleteWidget::DeleteWidget(QWidget* const parent)
     d->doNotShowAgain->setGeometry(QRect(0, 0, 100, 30));
     d->doNotShowAgain->setText(i18n("Do not &ask again"));
 
-    QVBoxLayout* vbox = new QVBoxLayout(this);
+    QVBoxLayout* const vbox = new QVBoxLayout(this);
     vbox->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
     vbox->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
     vbox->setContentsMargins(0, 0, 0, 0);
@@ -397,12 +399,12 @@ void DeleteWidget::updateText()
             {
                 d->deleteText->setText(i18n("These items will be <b>permanently "
                                             "deleted</b> from your hard disk."));
-                d->warningIcon->setPixmap(QIcon::fromTheme("dialog-warning").pixmap(48));
+                d->warningIcon->setPixmap(QIcon::fromTheme(QLatin1String("dialog-warning")).pixmap(48));
             }
             else
             {
                 d->deleteText->setText(i18n("These items will be moved to Trash."));
-                d->warningIcon->setPixmap(QIcon::fromTheme("user-trash-full").pixmap(48));
+                d->warningIcon->setPixmap(QIcon::fromTheme(QLatin1String("user-trash-full")).pixmap(48));
                 d->numFiles->setText(i18np("<b>1</b> item selected.", "<b>%1</b> items selected.",
                                            d->fileList->topLevelItemCount()));
             }
@@ -417,12 +419,12 @@ void DeleteWidget::updateText()
             {
                 d->deleteText->setText(i18n("These albums will be <b>permanently "
                                             "deleted</b> from your hard disk."));
-                d->warningIcon->setPixmap(QIcon::fromTheme("dialog-warning").pixmap(48));
+                d->warningIcon->setPixmap(QIcon::fromTheme(QLatin1String("dialog-warning")).pixmap(48));
             }
             else
             {
                 d->deleteText->setText(i18n("These albums will be moved to Trash."));
-                d->warningIcon->setPixmap(QIcon::fromTheme("user-trash-full").pixmap(48));
+                d->warningIcon->setPixmap(QIcon::fromTheme(QLatin1String("user-trash-full")).pixmap(48));
             }
 
             d->numFiles->setText(i18np("<b>1</b> album selected.", "<b>%1</b> albums selected.",
@@ -440,7 +442,7 @@ void DeleteWidget::updateText()
                                             "<p>Note that <b>all subalbums</b> "
                                             "are included in this list and will "
                                             "be deleted permanently as well.</p>"));
-                d->warningIcon->setPixmap(QIcon::fromTheme("dialog-warning").pixmap(48));
+                d->warningIcon->setPixmap(QIcon::fromTheme(QLatin1String("dialog-warning")).pixmap(48));
             }
             else
             {
@@ -448,7 +450,7 @@ void DeleteWidget::updateText()
                                             "<p>Note that <b>all subalbums</b> "
                                             "are included in this list and will "
                                             "be moved to Trash as well.</p>"));
-                d->warningIcon->setPixmap(QIcon::fromTheme("user-trash-full").pixmap(48));
+                d->warningIcon->setPixmap(QIcon::fromTheme(QLatin1String("user-trash-full")).pixmap(48));
             }
 
             d->numFiles->setText(i18np("<b>1</b> album selected.", "<b>%1</b> albums selected.",
@@ -483,7 +485,8 @@ public:
 };
 
 DeleteDialog::DeleteDialog(QWidget* const parent)
-    : QDialog(parent), d(new Private)
+    : QDialog(parent),
+      d(new Private)
 {
     setModal(true);
     
@@ -587,8 +590,10 @@ void DeleteDialog::slotShouldDelete(bool shouldDelete)
     // In that case, save the user's preference.
     d->saveShouldDeleteUserPreference = true;
     
-    d->buttons->button(QDialogButtonBox::Apply)->setText(shouldDelete ? i18n("&Delete")                 : i18n("&Move to Trash"));
-    d->buttons->button(QDialogButtonBox::Apply)->setIcon(shouldDelete ? QIcon::fromTheme("edit-delete") : QIcon::fromTheme("user-trash-full"));
+    d->buttons->button(QDialogButtonBox::Apply)->setText(shouldDelete ? i18n("&Delete")
+                                                                      : i18n("&Move to Trash"));
+    d->buttons->button(QDialogButtonBox::Apply)->setIcon(shouldDelete ? QIcon::fromTheme(QLatin1String("edit-delete"))
+                                                                      : QIcon::fromTheme(QLatin1String("user-trash-full")));
 }
 
 void DeleteDialog::presetDeleteMode(DeleteDialogMode::DeleteMode mode)

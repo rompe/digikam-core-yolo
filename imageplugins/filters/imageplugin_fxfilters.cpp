@@ -78,54 +78,54 @@ public:
 };
 
 ImagePlugin_FxFilters::ImagePlugin_FxFilters(QObject* const parent, const QVariantList&)
-    : ImagePlugin(parent, "ImagePlugin_FxFilters"),
+    : ImagePlugin(parent, QLatin1String("ImagePlugin_FxFilters")),
       d(new Private)
 {
     // to load the rc file from digikam's installation path
-    setComponentName("digikam", i18nc("to be displayed in shortcuts dialog", "Filter plugins"));
+    setComponentName(QLatin1String("digikam"), i18nc("to be displayed in shortcuts dialog", "Filter plugins"));
 
-    d->colorEffectsAction = new QAction(QIcon::fromTheme("colorfx"), i18n("Color Effects..."), this);
-    actionCollection()->addAction("imageplugin_colorfx", d->colorEffectsAction);
+    d->colorEffectsAction = new QAction(QIcon::fromTheme(QLatin1String("colorfx")), i18n("Color Effects..."), this);
+    actionCollection()->addAction(QLatin1String("imageplugin_colorfx"), d->colorEffectsAction);
     connect(d->colorEffectsAction, SIGNAL(triggered(bool)),
             this, SLOT(slotColorEffects()));
 
-    d->charcoalAction = new QAction(QIcon::fromTheme("charcoaltool"), i18n("Charcoal Drawing..."), this);
-    actionCollection()->addAction("imageplugin_charcoal", d->charcoalAction);
+    d->charcoalAction = new QAction(QIcon::fromTheme(QLatin1String("charcoaltool")), i18n("Charcoal Drawing..."), this);
+    actionCollection()->addAction(QLatin1String("imageplugin_charcoal"), d->charcoalAction);
     connect(d->charcoalAction, SIGNAL(triggered(bool)),
             this, SLOT(slotCharcoal()));
 
-    d->embossAction = new QAction(QIcon::fromTheme("embosstool"), i18n("Emboss..."), this);
-    actionCollection()->addAction("imageplugin_emboss", d->embossAction);
+    d->embossAction = new QAction(QIcon::fromTheme(QLatin1String("embosstool")), i18n("Emboss..."), this);
+    actionCollection()->addAction(QLatin1String("imageplugin_emboss"), d->embossAction);
     connect(d->embossAction, SIGNAL(triggered(bool)),
             this, SLOT(slotEmboss()));
 
-    d->oilpaintAction = new QAction(QIcon::fromTheme("oilpaint"), i18n("Oil Paint..."), this);
-    actionCollection()->addAction("imageplugin_oilpaint", d->oilpaintAction);
+    d->oilpaintAction = new QAction(QIcon::fromTheme(QLatin1String("oilpaint")), i18n("Oil Paint..."), this);
+    actionCollection()->addAction(QLatin1String("imageplugin_oilpaint"), d->oilpaintAction);
     connect(d->oilpaintAction, SIGNAL(triggered(bool)),
             this ,SLOT(slotOilPaint()));
 
-    d->blurfxAction = new QAction(QIcon::fromTheme("blurfx"), i18n("Blur Effects..."), this);
-    actionCollection()->addAction("imageplugin_blurfx", d->blurfxAction);
+    d->blurfxAction = new QAction(QIcon::fromTheme(QLatin1String("blurfx")), i18n("Blur Effects..."), this);
+    actionCollection()->addAction(QLatin1String("imageplugin_blurfx"), d->blurfxAction);
     connect(d->blurfxAction, SIGNAL(triggered(bool)),
             this, SLOT(slotBlurFX()));
 
-    d->distortionfxAction = new QAction(QIcon::fromTheme("distortionfx"), i18n("Distortion Effects..."), this);
-    actionCollection()->addAction("imageplugin_distortionfx", d->distortionfxAction );
+    d->distortionfxAction = new QAction(QIcon::fromTheme(QLatin1String("distortionfx")), i18n("Distortion Effects..."), this);
+    actionCollection()->addAction(QLatin1String("imageplugin_distortionfx"), d->distortionfxAction );
     connect(d->distortionfxAction, SIGNAL(triggered(bool)),
             this, SLOT(slotDistortionFX()));
 
-    d->raindropAction = new QAction(QIcon::fromTheme("raindrop"), i18n("Raindrops..."), this);
-    actionCollection()->addAction("imageplugin_raindrop", d->raindropAction);
+    d->raindropAction = new QAction(QIcon::fromTheme(QLatin1String("raindrop")), i18n("Raindrops..."), this);
+    actionCollection()->addAction(QLatin1String("imageplugin_raindrop"), d->raindropAction);
     connect(d->raindropAction, SIGNAL(triggered(bool)),
             this, SLOT(slotRainDrop()));
 
-    d->filmgrainAction  = new QAction(QIcon::fromTheme("filmgrain"), i18n("Add Film Grain..."), this);
-    actionCollection()->addAction("imageplugin_filmgrain", d->filmgrainAction);
+    d->filmgrainAction  = new QAction(QIcon::fromTheme(QLatin1String("filmgrain")), i18n("Add Film Grain..."), this);
+    actionCollection()->addAction(QLatin1String("imageplugin_filmgrain"), d->filmgrainAction);
     connect(d->filmgrainAction, SIGNAL(triggered(bool)),
             this, SLOT(slotFilmGrain()));
 
     setActionCategory(i18n("Effects"));
-    setXMLFile( "digikamimageplugin_fxfilters_ui.rc" );
+    setXMLFile(QLatin1String("digikamimageplugin_fxfilters_ui.rc"));
 
     qCDebug(DIGIKAM_IMAGEPLUGINS_LOG) << "ImagePlugin_FxFilters plugin loaded";
 }

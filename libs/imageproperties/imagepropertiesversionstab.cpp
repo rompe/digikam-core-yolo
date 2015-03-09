@@ -31,6 +31,7 @@
 #include <QModelIndex>
 #include <QUrl>
 #include <QIcon>
+#include <QString>
 
 // KDE includes
 
@@ -71,10 +72,11 @@ public:
     static const QString  configActiveTab;
 };
 
-const QString ImagePropertiesVersionsTab::Private::configActiveTab("Version Properties Tab");
+const QString ImagePropertiesVersionsTab::Private::configActiveTab(QLatin1String("Version Properties Tab"));
 
 ImagePropertiesVersionsTab::ImagePropertiesVersionsTab(QWidget* const parent)
-    : QTabWidget(parent), d(new Private)
+    : QTabWidget(parent),
+      d(new Private)
 {
     d->versionsWidget       = new VersionsWidget(this);
     insertTab(0, d->versionsWidget, i18n("Versions"));
@@ -95,7 +97,7 @@ void ImagePropertiesVersionsTab::readSettings(KConfigGroup& group)
 {
     QString tab = group.readEntry(d->configActiveTab, "versions");
 
-    if (tab == "versions")
+    if (tab == QLatin1String("versions"))
         setCurrentWidget(d->versionsWidget);
     else
         setCurrentWidget(d->filtersHistoryWidget);
@@ -155,7 +157,7 @@ void ImagePropertiesVersionsTab::addShowHideOverlay()
 
 void ImagePropertiesVersionsTab::addOpenImageAction()
 {
-    ActionVersionsOverlay* const overlay = d->versionsWidget->addActionOverlay(QIcon::fromTheme("document-open"),
+    ActionVersionsOverlay* const overlay = d->versionsWidget->addActionOverlay(QIcon::fromTheme(QLatin1String("document-open")),
                                                                                i18n("Open"),
                                                                                i18n("Open file"));
 
@@ -165,7 +167,7 @@ void ImagePropertiesVersionsTab::addOpenImageAction()
 
 void ImagePropertiesVersionsTab::addOpenAlbumAction(const ImageModel* referenceModel)
 {
-    ActionVersionsOverlay* const overlay = d->versionsWidget->addActionOverlay(QIcon::fromTheme("folder-image"),
+    ActionVersionsOverlay* const overlay = d->versionsWidget->addActionOverlay(QIcon::fromTheme(QLatin1String("folder-image")),
                                                                                i18n("Go To Albums"),
                                                                                i18nc("@info:tooltip", "Go to the album of this image"));
     overlay->setReferenceModel(referenceModel);

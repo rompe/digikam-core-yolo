@@ -128,15 +128,15 @@ public:
         if (album->isAlbumRoot())
         {
             cmh.addActionNewAlbum(d->albumModificationHelper, album);
-            cmh.addAction("album_openinfilemanager");
-            cmh.addAction("album_openinterminal");
+            cmh.addAction(QLatin1String("album_openinfilemanager"));
+            cmh.addAction(QLatin1String("album_openinterminal"));
             return;
         } 
 
         // --------------------------------------------------------
         cmh.addActionNewAlbum(d->albumModificationHelper, album);
-        cmh.addAction("album_openinfilemanager");
-        cmh.addAction("album_openinterminal");
+        cmh.addAction(QLatin1String("album_openinfilemanager"));
+        cmh.addAction(QLatin1String("album_openinterminal"));
         cmh.addSeparator();
         // --------------------------------------------------------
         cmh.addActionRenameAlbum(d->albumModificationHelper, album);
@@ -173,8 +173,8 @@ AlbumSelectionTreeView::AlbumSelectionTreeView(QWidget* const parent, AlbumModel
     setAlbumModel(model);
     d->albumModificationHelper = albumModificationHelper;
     d->toolTip                 = new AlbumViewToolTip(this);
-    d->findDuplAction          = new QAction(QIcon::fromTheme("tools-wizard"), i18n("Find Duplicates..."), this);
-    d->rebuildThumbsAction     = new QAction(QIcon::fromTheme("view-refresh"), i18n("Refresh"),            this);
+    d->findDuplAction          = new QAction(QIcon::fromTheme(QLatin1String("tools-wizard")), i18n("Find Duplicates..."), this);
+    d->rebuildThumbsAction     = new QAction(QIcon::fromTheme(QLatin1String("view-refresh")), i18n("Refresh"),            this);
 
     connect(d->findDuplAction,      SIGNAL(triggered()),
             this, SLOT(slotFindDuplicates()));

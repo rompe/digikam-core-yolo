@@ -79,10 +79,10 @@ public:
     EditorToolSettings*  gboxSettings;
 };
 
-const QString RainDropTool::Private::configGroupName("raindrops Tool");
-const QString RainDropTool::Private::configDropAdjustmentEntry("DropAdjustment");
-const QString RainDropTool::Private::configAmountAdjustmentEntry("AmountAdjustment");
-const QString RainDropTool::Private::configCoeffAdjustmentEntry("CoeffAdjustment");
+const QString RainDropTool::Private::configGroupName(QLatin1String("raindrops Tool"));
+const QString RainDropTool::Private::configDropAdjustmentEntry(QLatin1String("DropAdjustment"));
+const QString RainDropTool::Private::configAmountAdjustmentEntry(QLatin1String("AmountAdjustment"));
+const QString RainDropTool::Private::configCoeffAdjustmentEntry(QLatin1String("CoeffAdjustment"));
 
 // --------------------------------------------------------
 
@@ -90,9 +90,9 @@ RainDropTool::RainDropTool(QObject* const parent)
     : EditorToolThreaded(parent),
       d(new Private)
 {
-    setObjectName("raindrops");
+    setObjectName(QLatin1String("raindrops"));
     setToolName(i18n("Raindrops"));
-    setToolIcon(QIcon::fromTheme("raindrop"));
+    setToolIcon(QIcon::fromTheme(QLatin1String("raindrop")));
 
     d->previewWidget = new ImageGuideWidget(0, false, ImageGuideWidget::HVGuideMode);
     d->previewWidget->setWhatsThis(i18n("This is the preview of the Raindrop effect."

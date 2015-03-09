@@ -104,12 +104,12 @@ public:
 
     static QString          FilterIdentifier()
     {
-        return "digikam:ContentAwareFilter";
+        return QLatin1String("digikam:ContentAwareFilter");
     }
 
     static QString          DisplayableName()
     {
-        return I18N_NOOP("Content-Aware Filter");
+        return QString::fromUtf8(I18N_NOOP("Content-Aware Filter"));
     }
 
     static QList<int>       SupportedVersions()
