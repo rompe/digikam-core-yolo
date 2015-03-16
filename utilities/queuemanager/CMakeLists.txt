@@ -97,6 +97,7 @@ target_link_libraries(queuemanager
 
                       KF5::KExiv2
                       KF5::KDcraw
+                      dimg
 )
 
 if(LENSFUN_FOUND)

@@ -47,6 +47,8 @@ public:
     static const QString                      configGroupMetadata;
     static const QString                      configGroupBaloo;
     static const QString                      configGroupGeneral;
+    static const QString                      configGroupRegexLastUsedPattern;
+    static const QString                      configGroupRegexPatternHistoryList;
     static const QString                      configGroupVersioning;
     static const QString                      configGroupFaceDetection;
     static const QString                      configAlbumCollectionsEntry;
@@ -227,6 +229,8 @@ public:
     // album view settings
     ApplicationSettings::AlbumSortOrder       albumSortOrder;
     bool                                      albumSortChanged;
+    QString                                   groupRegexLastUsedPattern;
+    QStringList                               groupRegexPatternHistoryList;
 
     // icon view settings
     int                                       imageSortOrder;

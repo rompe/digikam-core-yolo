@@ -76,6 +76,7 @@ public Q_SLOTS:
 
     void createGroupFromSelection();
     void createGroupByTimeFromSelection();
+    void createGroupByRegexFromSelection();
     void ungroupSelected();
     void removeSelectedFromGroup();
 

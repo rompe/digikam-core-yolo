@@ -52,6 +52,7 @@ private:
 private Q_SLOTS:
 
     void slotUseLargeThumbsToggled(bool);
+    void slotGroupRegexToggled();
 
 private:
 

@@ -50,6 +50,8 @@ const QString ApplicationSettings::Private::configGroupExif(QLatin1String("EXIF 
 const QString ApplicationSettings::Private::configGroupMetadata(QLatin1String("Metadata Settings"));
 const QString ApplicationSettings::Private::configGroupBaloo(QLatin1String("Baloo Settings"));
 const QString ApplicationSettings::Private::configGroupGeneral(QLatin1String("General Settings"));
+const QString ApplicationSettings::Private::configGroupRegexLastUsedPattern(QLatin1String("Group Regex Last Used Pattern"));
+const QString ApplicationSettings::Private::configGroupRegexPatternHistoryList(QLatin1String("Group Regex Pattern History List"));
 const QString ApplicationSettings::Private::configGroupVersioning(QLatin1String("Versioning Settings"));
 const QString ApplicationSettings::Private::configGroupFaceDetection(QLatin1String("Face Detection Settings"));
 const QString ApplicationSettings::Private::configAlbumCollectionsEntry(QLatin1String("Album Collections"));
@@ -195,6 +197,8 @@ ApplicationSettings::Private::Private(ApplicationSettings* const q)
       sidebarTitleStyle(DMultiTabBar::ActiveIconText),
       albumSortOrder(ApplicationSettings::ByFolder),
       albumSortChanged(false),
+      groupRegexLastUsedPattern(QString()),
+      groupRegexPatternHistoryList(QStringList()),
       imageSortOrder(0),
       imageSorting(0),
       imageGroupMode(0),

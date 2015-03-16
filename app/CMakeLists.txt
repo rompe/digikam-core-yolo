@@ -213,6 +213,8 @@ add_executable(digikam ${digikam_SRCS})
 
 add_dependencies(digikam digikam-gitversion)
 
+find_package( Boost REQUIRED COMPONENTS regex )
+
 # TO fill plist XML file for OSX #####################################################
 
 set(MACOSX_APP_NAME_STRING             "digikam")
@@ -231,6 +233,10 @@ target_link_libraries(digikam
                       Qt5::WebKitWidgets
 
                       ${OpenCV_LIBRARIES}
+                      ${Boost_REGEX_LIBRARY}
+)
+target_link_libraries(digikamgui
+                      ${Boost_REGEX_LIBRARY}
 )
 
 if(ENABLE_MEDIAPLAYER)

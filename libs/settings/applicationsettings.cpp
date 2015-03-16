@@ -85,7 +85,7 @@ QString ApplicationSettings::generalConfigGroupName() const
 {
     return d->configGroupGeneral;
 }
-    
+
 KConfigGroup ApplicationSettings::generalConfigGroup() const
 {
     return d->config->group(generalConfigGroupName());
@@ -218,6 +218,11 @@ void ApplicationSettings::readSettings()
     }
     d->previewShowIcons                 = group.readEntry(d->configPreviewShowIconsEntry,             true);
     d->showThumbbar                     = group.readEntry(d->configShowThumbbarEntry,                 true);
+
+    d->groupRegexLastUsedPattern        = group.readEntry(d->configGroupRegexLastUsedPattern, QString::fromLatin1("(.+)\\.[^.]+(?# detect files with different extensions)"));
+    d->groupRegexPatternHistoryList     = group.readEntry(d->configGroupRegexPatternHistoryList,
+           QStringList() << QString::fromLatin1("(.+?)( \\(.+\\)|_\\d+|_v\\d+|-Edit|_\\w+_shotwell)?\\.[^.]+(?# detect common modifier)")
+                         << QString::fromLatin1("(\\d{8}-(\\d{6}-)?\\w{3}\\d{4}-)\\w{5}[^.]*\\.[^.]+(?# group against exiflow schema)") );
 
     d->showFolderTreeViewItemsCount     = group.readEntry(d->configShowFolderTreeViewItemsCountEntry, false);
 
@@ -364,6 +369,9 @@ void ApplicationSettings::saveSettings()
     }
     group.writeEntry(d->configPreviewShowIconsEntry,                   d->previewShowIcons);
     group.writeEntry(d->configShowThumbbarEntry,                       d->showThumbbar);
+
+    group.writeEntry(d->configGroupRegexLastUsedPattern,               d->groupRegexLastUsedPattern);
+    group.writeEntry(d->configGroupRegexPatternHistoryList,            d->groupRegexPatternHistoryList);
 
     group.writeEntry(d->configShowFolderTreeViewItemsCountEntry,       d->showFolderTreeViewItemsCount);
 

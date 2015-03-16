@@ -35,6 +35,10 @@
 
 #include <kwindowsystem.h>
 
+// Boost includes
+
+#include <boost/regex.hpp>
+
 // Local includes
 
 #include "digikam_debug.h"
@@ -357,6 +361,85 @@ void ImageViewUtilities::createGroupByTimeFromInfoList(const ImageInfoList& imag
         if (!group.isEmpty())
         {
             FileActionMngr::instance()->addToGroup(leader, group);
+        }
+    }
+}
+
+namespace
+{
+bool lessThanByNameForImageInfo(const ImageInfo& a, const ImageInfo& b)
+{
+    return a.name() < b.name();
+}
+}
+
+namespace
+{
+bool lessThanByModDateTimeForImageInfo(const ImageInfo& a, const ImageInfo& b)
+{
+    return a.format().startsWith(QString::fromLatin1("RAW-")) || (a.modDateTime() < b.modDateTime() && !b.format().startsWith(QString::fromLatin1("RAW-")));
+}
+}
+
+void ImageViewUtilities::createGroupByRegexFromInfoList(const ImageInfoList& imageInfoList)
+{
+    QList<ImageInfo> groupingList = imageInfoList;
+    // sort by regexp
+    qStableSort(groupingList.begin(), groupingList.end(), lessThanByNameForImageInfo);
+
+    QString groupregex = ApplicationSettings::instance()->getGroupRegexLastUsedPattern();
+
+    std::string regex = groupregex.toLocal8Bit().constData();
+    boost::regex regexp(regex);
+    boost::match_results<std::string::const_iterator> matches;
+    std::string::const_iterator start, end;
+
+    QList<ImageInfo>::iterator it, it2;
+    for (it = groupingList.begin(); it != groupingList.end(); )
+    {
+        std::string filename = it->name().toLocal8Bit().constData();
+        start = filename.begin();
+        end = filename.end();
+        if (regex_match(start, end, matches, regexp))
+        {
+           std::string nameleader(matches[1].first, matches[1].second);
+           QList<ImageInfo> group;
+           group << *it;
+           for (it2 = it + 1; it2 != groupingList.end(); ++it2)
+           {
+               std::string filename2 = it2->name().toLocal8Bit().constData();
+               start = filename2.begin();
+               end = filename2.end();
+               if (regex_match(start, end, matches, regexp))
+               {
+                  std::string newleader(matches[1].first, matches[1].second);
+                  if (newleader == nameleader)
+                  {
+                      group << *it2;
+                  }
+                  else
+                  {
+                      break;
+                  }
+               }
+               else
+               {
+                   break;
+               }
+           }
+           // increment to next item not put in the group
+           it = it2;
+
+           if (group.size() > 1)
+           {
+               qStableSort(group.begin(), group.end(), lessThanByModDateTimeForImageInfo);
+               const ImageInfo& leader = group.takeLast();
+               FileActionMngr::instance()->addToGroup(leader, group);
+           }
+        }
+        else
+        {
+            ++it;
         }
     }
 }

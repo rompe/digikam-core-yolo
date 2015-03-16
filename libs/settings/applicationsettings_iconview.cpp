@@ -253,4 +253,25 @@ bool ApplicationSettings::getPreviewShowIcons() const
     return d->previewShowIcons;
 }
 
+void ApplicationSettings::setGroupRegexLastUsedPattern(const QString& val)
+{
+    d->groupRegexLastUsedPattern = val;
+}
+
+QString ApplicationSettings::getGroupRegexLastUsedPattern() const
+{
+    return d->groupRegexLastUsedPattern;
+}
+
+void ApplicationSettings::setGroupRegexPatternHistoryList(const QStringList& val)
+{
+    d->groupRegexPatternHistoryList = val;
+}
+
+QStringList ApplicationSettings::getGroupRegexPatternHistoryList() const
+{
+    return d->groupRegexPatternHistoryList;
+}
+
+
 }  // namespace Digikam
