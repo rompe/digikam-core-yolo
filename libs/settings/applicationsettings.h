@@ -384,6 +384,12 @@ public:
 
     // -- Miscs Settings -------------------------------------------------------
 
+    void setGroupRegexLastUsedPattern(const QString& val);
+    QString getGroupRegexLastUsedPattern() const;
+
+    void setGroupRegexPatternHistoryList(const QStringList& val);
+    QStringList getGroupRegexPatternHistoryList() const;
+
     void setUseTrash(bool val);
     bool getUseTrash() const;
 

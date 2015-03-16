@@ -77,6 +77,8 @@ public Q_SLOTS:
 
     void createGroupByTimeFromInfoList(const ImageInfoList& imageInfoList);
 
+    void createGroupByRegexFromInfoList(const ImageInfoList& imageInfoList);
+
 Q_SIGNALS:
 
     void editorCurrentUrlChanged(const QUrl& url);

@@ -105,6 +105,7 @@ Q_SIGNALS:
     void signalPopupTagsView();
     void signalCreateGroup();
     void signalCreateGroupByTime();
+    void signalCreateGroupByRegex();
     void signalUngroup();
     void signalRemoveFromGroup();
 
