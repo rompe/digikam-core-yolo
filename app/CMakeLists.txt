@@ -232,7 +232,10 @@ target_link_libraries(digikam
                       Qt5::WebKitWidgets
 
                       ${OpenCV_LIBRARIES}
-		      ${Boost_REGEX_LIBRARY}
+                      ${Boost_REGEX_LIBRARY}
+)
+target_link_libraries(digikamgui
+                      ${Boost_REGEX_LIBRARY}
 )
 
 if(ENABLE_MEDIAPLAYER)
