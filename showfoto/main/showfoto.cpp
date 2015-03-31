@@ -12,7 +12,7 @@
  * Copyright (C) 2004-2005 by Renchi Raju <renchi dot raju at gmail dot com>
  * Copyright (C) 2005-2006 by Tom Albers <tomalbers at kde dot nl>
  * Copyright (C) 2008      by Arnd Baecker <arnd dot baecker at web dot de>
- * Copyright (C) 2013-2014 by Mohamed Anwer <mohammed dot ahmed dot anwer at gmail dot com>
+ * Copyright (C) 2013-2014 by Mohamed Anwer <m dot anwer at gmx dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -1014,7 +1014,7 @@ void ShowFoto::slotDeleteCurrentItemResult(KJob* job)
     }
 
     // No error, remove item in thumbbar.
-    //d->model->removeIndex(d->thumbBar->currentIndex());
+    d->model->removeIndex(d->thumbBar->currentIndex());
 
     // Disable menu actions and SideBar if no current image.
 

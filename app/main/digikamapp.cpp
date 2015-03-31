@@ -11,7 +11,7 @@
  * Copyright (C) 2002-2015 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2009-2012 by Andi Clemens <andi dot clemens at gmail dot com>
  * Copyright (C) 2013      by Michael G. Hansen <mike at mghansen dot de>
- * Copyright (C) 2014      by Mohamed Anwer <mohammed dot ahmed dot anwer at gmail dot com>
+ * Copyright (C) 2014      by Mohamed Anwer <m dot anwer at gmx dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -128,7 +128,7 @@
 #include "kipipluginloader.h"
 #endif
 
-#ifdef HAVE_BALOO
+#ifdef HAVE_KFILEMETADATA
 #include "baloowrap.h"
 #endif
 
@@ -260,12 +260,12 @@ DigikamApp::DigikamApp()
 
     readFullScreenSettings(group);
 
-#ifdef HAVE_BALOO
+#ifdef HAVE_KFILEMETADATA
     //Create BalooWrap object, because it need to register a listener
     // to update digiKam data when changes in Baloo occur
     BalooWrap* const baloo = BalooWrap::instance();
     Q_UNUSED(baloo);
-#endif //HAVE_BALOO
+#endif //HAVE_KFILEMETADATA
 
     setAutoSaveSettings(group, true);
 
@@ -315,7 +315,7 @@ DigikamApp::~DigikamApp()
         TagsManager::instance()->close();
     }
 
-#ifdef HAVE_BALOO
+#ifdef HAVE_KFILEMETADATA
     if(BalooWrap::isCreated())
     {
         delete BalooWrap::instance();

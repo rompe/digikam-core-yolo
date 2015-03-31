@@ -462,7 +462,7 @@ SetupMetadata::SetupMetadata(QWidget* const parent)
 
     // --------------------------------------------------------
 
-#ifdef HAVE_BALOO
+#ifdef HAVE_KFILEMETADATA
 
     QWidget* const balooPanel      = new QWidget(d->tab);
     QVBoxLayout* const balooLayout = new QVBoxLayout(balooPanel);
@@ -493,7 +493,7 @@ SetupMetadata::SetupMetadata(QWidget* const parent)
     balooBox->setFrameStyle(QFrame::StyledPanel | QFrame::Raised);
 
     QLabel* const balooLogoLabel   = new QLabel;
-    balooLogoLabel->setPixmap(QIcon::fromTheme(QLatin1String("baloo").pixmap(48));
+    balooLogoLabel->setPixmap(QIcon::fromTheme(QLatin1String("baloo")).pixmap(48));
 
     QLabel* const balooExplanation = new QLabel(balooBox);
     balooExplanation->setOpenExternalLinks(true);
@@ -525,7 +525,7 @@ SetupMetadata::SetupMetadata(QWidget* const parent)
     balooLayout->addWidget(d->resyncButton, 0, Qt::AlignRight);
     balooLayout->addStretch();
 
-#endif // HAVE_BALOO
+#endif // HAVE_KFILEMETADATA
 
     // --------------------------------------------------------
 
@@ -610,7 +610,7 @@ void SetupMetadata::applySettings()
     mSettings->setSettings(set);
 
 
-#ifdef HAVE_BALOO
+#ifdef HAVE_KFILEMETADATA
     ApplicationSettings* const aSettings = ApplicationSettings::instance();
 
     if (!aSettings)
@@ -677,7 +677,7 @@ void SetupMetadata::readSettings()
         d->writingModeCombo->setCurrentIndex(d->writingModeCombo->findData(set.metadataWritingMode));
     }
 
-#ifdef HAVE_BALOO
+#ifdef HAVE_KFILEMETADATA
     ApplicationSettings* const aSettings = ApplicationSettings::instance();
 
     if (!aSettings)

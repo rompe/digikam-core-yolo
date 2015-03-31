@@ -6,7 +6,7 @@
  * Date        : 2013-07-05
  * Description : Qt model for Showfoto entries
  *
- * Copyright (C) 2013 by Mohamed Anwer <mohammed dot ahmed dot anwer at gmail dot com>
+ * Copyright (C) 2013 by Mohamed Anwer <m dot anwer at gmx dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -39,6 +39,8 @@ using namespace Digikam;
 
 namespace ShowFoto
 {
+
+typedef QPair<int, int> IntPair;
 
 class ShowfotoImageModel : public QAbstractListModel, public DragDropModelImplementation
 {
@@ -263,9 +265,10 @@ private:
 
     void appendInfos(const QList<ShowfotoItemInfo>& infos);
     void publiciseInfos(const QList<ShowfotoItemInfo>& infos);
-    void cleanSituationChecks();
+    // void cleanSituationChecks();
     void removeRowPairs(const QList<QPair<int, int> >& toRemove);
-    void removeRowPairsWithCheck(const QList<QPair<int, int> >& toRemove);
+    // void removeRowPairsWithCheck(const QList<QPair<int, int> >& toRemove);
+    static QList<IntPair> toContiguousPairs(const QList<int>& unsorted);
 
 public:
 

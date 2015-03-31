@@ -9,7 +9,7 @@
  * Copyright (C) 2003-2004 by Renchi Raju <renchi dot raju at gmail dot com>
  * Copyright (C) 2003-2015 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2007      by Arnd Baecker <arnd dot baecker at web dot de>
- * Copyright (C) 2014      by Mohamed Anwer <mohammed dot ahmed dot anwer at gmail dot com>
+ * Copyright (C) 2014      by Mohamed Anwer <m dot anwer at gmx dot com>
  * Copyright (C) 2014      by Veaceslav Munteanu <veaceslav dot munteanu90 at gmail dot com>
  *
  * This program is free software; you can redistribute it
@@ -42,7 +42,7 @@
 #include "thememanager.h"
 #include "applicationsettings_p.h"
 
-#ifdef HAVE_BALOO
+#ifdef HAVE_KFILEMETADATA
 #include "baloowrap.h"
 #endif
 
@@ -98,7 +98,7 @@ void ApplicationSettings::emitSetupChanged()
 
 void ApplicationSettings::applyBalooSettings()
 {
-#ifdef HAVE_BALOO
+#ifdef HAVE_KFILEMETADATA
     BalooWrap::instance()->setSyncToBaloo(d->syncToBaloo);
     BalooWrap::instance()->setSyncToDigikam(d->syncToDigikam);
 #endif
@@ -242,7 +242,7 @@ void ApplicationSettings::readSettings()
 
     d->databaseParams.readFromConfig();
 
-#ifdef HAVE_BALOO
+#ifdef HAVE_KFILEMETADATA
 
     group                               = config->group(d->configGroupBaloo);
 
@@ -251,7 +251,7 @@ void ApplicationSettings::readSettings()
 
     emit balooSettingsChanged();
 
-#endif // HAVE_BALOO
+#endif // HAVE_KFILEMETADATA
 
     // ---------------------------------------------------------------------
 
@@ -391,14 +391,14 @@ void ApplicationSettings::saveSettings()
 
     d->databaseParams.writeToConfig();
 
-#ifdef HAVE_BALOO
+#ifdef HAVE_KFILEMETADATA
 
     group = config->group(d->configGroupBaloo);
 
     group.writeEntry(d->configSyncBalootoDigikamEntry,                 d->syncToDigikam);
     group.writeEntry(d->configSyncDigikamtoBalooEntry,                 d->syncToBaloo);
 
-#endif // HAVE_BALOO
+#endif // HAVE_KFILEMETADATA
 
     // ---------------------------------------------------------------------
 

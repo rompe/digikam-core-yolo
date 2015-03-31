@@ -51,7 +51,7 @@ set(DBCONFIG_XML_VERSION "2")
 # =======================================================
 
 set(CMAKE_MIN_VERSION   "2.8.12")
-set(ECM_MIN_VERSION     "1.1.0")
+set(ECM_MIN_VERSION     "1.7.0")
 set(KF5_VERSION         "5.1.0")
 set(REQUIRED_QT_VERSION "5.2.0")
 set(KIPI_MIN_VERSION    "5.0.0")
@@ -83,6 +83,7 @@ include(ECMGeneratePriFile)
 include(ECMPackageConfigHelpers)
 include(ECMSetupVersion)
 include(ECMInstallIcons)
+include(ECMAddAppIcon)
 # KDE macros
 include(KDEInstallDirs)
 include(KDECMakeSettings)
@@ -93,20 +94,21 @@ include(MacroUtils)
 include(MacroLocalLibs)
 include(MacroOpenCV)
 include(MacroJPEG)
+include(MacroBoolTo01)
 
 # ==================================================================================================
 
-option(ENABLE_INTERNALMYSQL     "Build digiKam with internal MySQL server executable (default=OFF)"              OFF)
-option(ENABLE_BALOOSUPPORT      "Build digiKam with Baloo support (default=ON)"                                   ON)
-option(ENABLE_KDEPIMLIBSSUPPORT "Build digiKam with Kdepimlibs support (default=OFF)"                            OFF)
-option(ENABLE_MEDIAPLAYER       "Build digiKam with QtMultimedia support (default=ON)"                            ON)
+option(ENABLE_INTERNALMYSQL         "Build digiKam with internal MySQL server executable (default=OFF)"              OFF)
+option(ENABLE_KFILEMETADATASUPPORT  "Build digiKam with KFileMetadata support (default=ON)"                           ON)
+option(ENABLE_KDEPIMLIBSSUPPORT     "Build digiKam with Kdepimlibs support (default=OFF)"                            OFF)
+option(ENABLE_MEDIAPLAYER           "Build digiKam with QtMultimedia support (default=ON)"                           OFF)
 
 # Mysql support options (experimental):
-option(ENABLE_MYSQLSUPPORT      "Build digiKam with MySQL dabatase support (default=OFF)"                        OFF)
-option(ENABLE_INTERNALMYSQL     "Build digiKam with internal MySQL server executable (default=OFF)"              OFF)
+option(ENABLE_MYSQLSUPPORT          "Build digiKam with MySQL dabatase support (default=OFF)"                        OFF)
+option(ENABLE_INTERNALMYSQL         "Build digiKam with internal MySQL server executable (default=OFF)"              OFF)
 
 # Debug options:
-option(ENABLE_DIGIKAM_MODELTEST "Enable ModelTest on some models for debugging (default=OFF)"                    OFF)
+option(ENABLE_DIGIKAM_MODELTEST "Enable ModelTest on some models for debugging (default=OFF)"                        OFF)
 
 ############## Find Packages ###################
 
@@ -136,6 +138,7 @@ find_package(KF5 REQUIRED COMPONENTS
              NotifyConfig
              Notifications
              KIO
+             TextWidgets
              CoreAddons
              WindowSystem
              Solid
@@ -293,17 +296,14 @@ else()
     set(LENSFUN_FOUND FALSE)
 endif()
 
-# -- Baloo libraries rules ---------------------------------------------------------------------
+# -- KFileMetadata libraries rules ---------------------------------------------------------------------
 
-if(ENABLE_BALOOSUPPORT)
-
-    find_package(KF5Baloo)
+if(ENABLE_KFILEMETADATASUPPORT)
     find_package(KF5FileMetaData)
-
-    if(KF5Baloo_FOUND AND KF5FileMetaData_FOUND)
-        set(Baloo_FOUND TRUE)
+    if(KF5FileMetaData_FOUND)
+        set(KFILEMETADATA_FOUND TRUE)
     else()
-        set(Baloo_FOUND FALSE)
+        set(KFILEMETADATA_FOUND FALSE)
     endif()
 
 endif()
@@ -321,7 +321,7 @@ MACRO_BOOL_TO_01(EIGEN3_FOUND             HAVE_EIGEN3)
 MACRO_BOOL_TO_01(KF5Kipi_FOUND            HAVE_KIPI)
 MACRO_BOOL_TO_01(KF5KFace_FOUND           HAVE_KFACE)
 MACRO_BOOL_TO_01(KF5KGeoMap_FOUND         HAVE_KGEOMAP)
-MACRO_BOOL_TO_01(Baloo_FOUND              HAVE_BALOO)
+MACRO_BOOL_TO_01(KFILEMETADATA_FOUND      HAVE_KFILEMETADATA)
 
 # Whether to use Qt's scaling to downscale previews. Under MacOSX, Qt
 # can make use of the higher physical resolution of Retina
@@ -373,17 +373,17 @@ PRINT_LIBRARY_STATUS("libopencv"              "http://opencv.willowgarage.com"  
 
 # ================================================================
 
-PRINT_OPTIONAL_LIBRARY_STATUS("libkipi"       "https://projects.kde.org/projects/kde/kdegraphics/libs/libkipi" "(version >= ${KIPI_MIN_VERSION})"    "digiKam will be compiled without Kipi-plugins support."                      KF5Kipi_FOUND)
-PRINT_OPTIONAL_LIBRARY_STATUS("libkface"      "https://projects.kde.org/projects/extragear/libs/libkface"      "(version >= 2.0.0)"                  "digiKam will be compiled without faces detection and recognition support."   KF5KFace_FOUND)
-PRINT_OPTIONAL_LIBRARY_STATUS("libkgeomap"    "https://projects.kde.org/projects/extragear/libs/libkgeomap"    "(version >= ${KGEOMAP_MIN_VERSION})" "digiKam will be compiled without geolocation maps support."                  KF5KGeoMap_FOUND)
-PRINT_OPTIONAL_LIBRARY_STATUS("libjasper"     "http://www.ece.uvic.ca/~mdadams/jasper"                         "(version >= 1.7.0)"                  "digiKam will be compiled without JPEG2000 support."                          JASPER_FOUND)
-PRINT_OPTIONAL_LIBRARY_STATUS("liblensfun"    "http://lensfun.sourceforge.net"                                 "(version >= 0.2.6)"                  "digiKam will be compiled without Lens Auto Correction tool support."         LENSFUN_FOUND)
-PRINT_OPTIONAL_LIBRARY_STATUS("liblqr-1"      "http://liblqr.wikidot.com"                                      "(version >= 0.4.1)"                  "digiKam will be compiled without Contents Aware Resizer tool support."       LQR-1_FOUND)
-PRINT_OPTIONAL_LIBRARY_STATUS("libeigen3"     "http://eigen.tuxfamily.org"                                     "(version >= 3.0.0)"                  "digiKam will be compiled without Refocus tool support."                      EIGEN3_FOUND)
-PRINT_OPTIONAL_LIBRARY_STATUS("libgphoto2"    "http://www.gphoto.org"                                          "(version >= 2.4.0)"                  "digiKam will be compiled without GPhoto2 camera drivers support."            GPHOTO2_FOUND)
-PRINT_OPTIONAL_LIBRARY_STATUS("doxygen"       "http://www.doxygen.org"                                         "(version >= 1.8.0)"                  "digiKam will be compiled without API documentation building support."        DOXYGEN_FOUND)
-PRINT_OPTIONAL_LIBRARY_STATUS("libbaloo"      "https://projects.kde.org/projects/kde/kdelibs/baloo"            "(version >= 5.0.0)"                  "digiKam will be compiled without KDE files indexing support."                Baloo_FOUND)
-PRINT_OPTIONAL_LIBRARY_STATUS("libkdepimlibs" "http://pim.kde.org"                                             "(version >= 5.0.0)"                  "digiKam will be compiled without KDE address book support."                  KDEPIMLIBS_FOUND)
+PRINT_OPTIONAL_LIBRARY_STATUS("libkipi"          "https://projects.kde.org/projects/kde/kdegraphics/libs/libkipi" "(version >= ${KIPI_MIN_VERSION})"    "digiKam will be compiled without Kipi-plugins support."                      KF5Kipi_FOUND)
+PRINT_OPTIONAL_LIBRARY_STATUS("libkface"         "https://projects.kde.org/projects/extragear/libs/libkface"      "(version >= 2.0.0)"                  "digiKam will be compiled without faces detection and recognition support."   KF5KFace_FOUND)
+PRINT_OPTIONAL_LIBRARY_STATUS("libkgeomap"       "https://projects.kde.org/projects/extragear/libs/libkgeomap"    "(version >= ${KGEOMAP_MIN_VERSION})" "digiKam will be compiled without geolocation maps support."                  KF5KGeoMap_FOUND)
+PRINT_OPTIONAL_LIBRARY_STATUS("libjasper"        "http://www.ece.uvic.ca/~mdadams/jasper"                         "(version >= 1.7.0)"                  "digiKam will be compiled without JPEG2000 support."                          JASPER_FOUND)
+PRINT_OPTIONAL_LIBRARY_STATUS("liblensfun"       "http://lensfun.sourceforge.net"                                 "(version >= 0.2.6)"                  "digiKam will be compiled without Lens Auto Correction tool support."         LENSFUN_FOUND)
+PRINT_OPTIONAL_LIBRARY_STATUS("liblqr-1"         "http://liblqr.wikidot.com"                                      "(version >= 0.4.1)"                  "digiKam will be compiled without Contents Aware Resizer tool support."       LQR-1_FOUND)
+PRINT_OPTIONAL_LIBRARY_STATUS("libeigen3"        "http://eigen.tuxfamily.org"                                     "(version >= 3.0.0)"                  "digiKam will be compiled without Refocus tool support."                      EIGEN3_FOUND)
+PRINT_OPTIONAL_LIBRARY_STATUS("libgphoto2"       "http://www.gphoto.org"                                          "(version >= 2.4.0)"                  "digiKam will be compiled without GPhoto2 camera drivers support."            GPHOTO2_FOUND)
+PRINT_OPTIONAL_LIBRARY_STATUS("doxygen"          "http://www.doxygen.org"                                         "(version >= 1.8.0)"                  "digiKam will be compiled without API documentation building support."        DOXYGEN_FOUND)
+PRINT_OPTIONAL_LIBRARY_STATUS("libkfilemetadata" "https://projects.kde.org/projects/kde/kdelibs/baloo"            "(version >= 5.0.0)"                  "digiKam will be compiled without KDE file metadata support."                 KFILEMETADATA_FOUND)
+PRINT_OPTIONAL_LIBRARY_STATUS("libkdepimlibs"    "http://pim.kde.org"                                             "(version >= 5.0.0)"                  "digiKam will be compiled without KDE address book support."                  KDEPIMLIBS_FOUND)
 
 # ================================================================
 
