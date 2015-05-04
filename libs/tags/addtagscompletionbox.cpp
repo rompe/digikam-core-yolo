@@ -71,7 +71,7 @@ public:
     QStandardItemModel*   model;
     QStandardItem*        rootItem;
     QList<QStandardItem*> allItems;
-    TagModel*             parentModel;
+    QAbstractItemModel*   parentModel;
 };
 
 TagModelCompletion::TagModelCompletion()
@@ -87,7 +87,7 @@ TagModelCompletion::TagModelCompletion()
     QCompleter::setCompletionColumn(0);
 }
 
-void TagModelCompletion::setModel(TagModel* model)
+void TagModelCompletion::setModel(QAbstractItemModel* model, int idRole)
 {
     d->parentModel = model;
 
@@ -99,13 +99,14 @@ void TagModelCompletion::setModel(TagModel* model)
 
     int i = 0;
     QQueue<QModelIndex> q;
-
-    q.append(model->index(0,0));
+    int val =0;
+    while(model->index(val,0).isValid())
+        q.append(model->index(val++,0,QModelIndex()));
 
     while(!q.isEmpty())
     {
         QModelIndex current = q.dequeue();
-        TAlbum* const t = dynamic_cast<TAlbum*>(model->albumForIndex(current));
+        TAlbum* const t = AlbumManager::instance()->findTAlbum(current.data(idRole).toInt());
 
         if (t != NULL && !t->isInternalTag())
         {
@@ -132,15 +133,16 @@ void TagModelCompletion::setModel(TagModel* model)
         }
     }
 
-    QCompleter::setModel(d->model);
 }
 
 void TagModelCompletion::setModel(AlbumFilterModel* model)
 {
-    //QCompleter::setModel(d->model);
-    TagModel* tagModel = dynamic_cast<TagModel*>(model);
-    if(tagModel != NULL)
-        setModel(tagModel);
+    setModel(model, AbstractAlbumModel::AlbumIdRole);
+}
+
+void TagModelCompletion::setModel(TagModel* model)
+{
+    setModel(model, AbstractAlbumModel::AlbumIdRole);
 }
 
 TagModel* TagModelCompletion::model() const
@@ -163,7 +165,8 @@ void TagModelCompletion::update(QString word)
 {
     d->model->clear();
     QList<QStandardItem*> filtered;
-
+    if(d->allItems.isEmpty())
+        qDebug() << "The model was not set, no data";
     if(word.isEmpty())
     {
         QCompleter::complete();
@@ -189,7 +192,6 @@ void TagModelCompletion::update(QString word)
 
 void TagModelCompletion::complete(const QRect &rect)
 {
-    //qDebug() << "+++ Completion +++";
     QCompleter::complete(rect);
 }
 
@@ -197,14 +199,17 @@ void TagModelCompletion::slotInsertRows(QModelIndex index, int start, int end)
 {
     for(int i = start; i <= end; i++)
     {
-        TAlbum* const t = dynamic_cast<TAlbum*>(d->parentModel->albumForIndex(index.child(i,0)));
-
+        TAlbum* const t = AlbumManager::instance()->findTAlbum(index.child(i,0).data(AbstractAlbumModel::AlbumIdRole).toInt());
         if (t != NULL && !t->isInternalTag())
         {
-            QIcon icon(index.child(i, 0).data(Qt::DecorationRole).value<QPixmap>());
+            QIcon icon;
+            if(!t->icon().isEmpty())
+                icon = QIcon::fromTheme(t->icon());
+            else
+                icon = QIcon::fromTheme(QLatin1String("tag"));
+
             QStandardItem* const item = new QStandardItem(icon,t->title());
             item->setData(QVariant(t->id()), Qt::UserRole+5);
-            //root->appendRow(item);
             d->allItems.append(item);
         }
     }
@@ -221,9 +226,7 @@ void TagModelCompletion::slotDeleteRows(QModelIndex index, int start, int end)
 
     for(int i = start; i <= end; i++)
     {
-        TAlbum* const t = dynamic_cast<TAlbum*>(d->parentModel->albumForIndex(index.child(i,0)));
-        if(t != NULL && !t->isInternalTag())
-            removedIndexes.append(t->id());
+            removedIndexes.append(index.child(i,0).data(AbstractAlbumModel::AlbumIdRole).toInt());
     }
     QMutableListIterator<QStandardItem*> it(d->allItems);
     while(it.hasNext())
